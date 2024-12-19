@@ -49,7 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Topic::class, mappedBy: 'user')]
     private Collection $topics;
-  
+
     /**
      * @var Collection<int, Article>
      */
@@ -61,6 +61,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'user')]
     private Collection $comments;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profilePicture = null;
 
     public function __construct()
     {
@@ -175,7 +178,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-     /**
+    /**
      * @return Collection<int, Article>
      */
     public function getArticles(): Collection
@@ -204,7 +207,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-              
+
     public function removeArticle(Article $article): static
     {
         if ($this->articles->removeElement($article)) {
@@ -234,8 +237,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-       
-     /**
+
+    /**
      * @return Collection<int, Comment>
      */
     public function getComments(): Collection
@@ -275,5 +278,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function getprofilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setprofilePicture(?string $profilePicture): static
+    {
+        $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+    public function getprofilePictureUrl(): string
+    {
+        return $this->profilePicture
+            ? '/images/user_avatars/' . $this->profilePicture
+            : '/images/default-avatar.png';
     }
 }
