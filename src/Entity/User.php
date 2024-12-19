@@ -39,6 +39,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $nickname = null;
 
     /**
+     * @var Collection<int, Message>
+     */
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'user')]
+    private Collection $messages;
+
+    /**
+     * @var Collection<int, Topic>
+     */
+    #[ORM\OneToMany(targetEntity: Topic::class, mappedBy: 'user')]
+    private Collection $topics;
+  
+    /**
      * @var Collection<int, Article>
      */
     #[ORM\OneToMany(targetEntity: Article::class, mappedBy: 'user')]
@@ -54,6 +66,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->articles = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+        $this->topics = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,6 +158,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @return Collection<int, Message>
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): static
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages->add($message);
+            $message->setUser($this);
+        }
+
+        return $this;
+    }
+
+     /**
      * @return Collection<int, Article>
      */
     public function getArticles(): Collection
@@ -161,6 +193,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function removeMessage(Message $message): static
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getUser() === $this) {
+                $message->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+              
     public function removeArticle(Article $article): static
     {
         if ($this->articles->removeElement($article)) {
@@ -174,6 +218,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @return Collection<int, Topic>
+     */
+    public function getTopics(): Collection
+    {
+        return $this->topics;
+    }
+
+    public function addTopic(Topic $topic): static
+    {
+        if (!$this->topics->contains($topic)) {
+            $this->topics->add($topic);
+            $topic->setUser($this);
+        }
+
+        return $this;
+    }
+       
+     /**
      * @return Collection<int, Comment>
      */
     public function getComments(): Collection
@@ -186,6 +248,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
             $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTopic(Topic $topic): static
+    {
+        if ($this->topics->removeElement($topic)) {
+            // set the owning side to null (unless already changed)
+            if ($topic->getUser() === $this) {
+                $topic->setUser(null);
+            }
         }
 
         return $this;
