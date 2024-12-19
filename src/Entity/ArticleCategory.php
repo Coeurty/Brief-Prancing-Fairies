@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ArticleCategorieRepository;
+use App\Repository\ArticleCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ArticleCategorieRepository::class)]
-class ArticleCategorie
+#[ORM\Entity(repositoryClass: ArticleCategoryRepository::class)]
+class ArticleCategory
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

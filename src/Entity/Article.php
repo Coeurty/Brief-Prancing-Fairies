@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Enum\StatusEnum;
-use App\Entity\ArticleCategorie;
+use App\Entity\ArticleCategory;
 use App\Entity\User;
 use App\Entity\Comment;
 
@@ -52,7 +52,7 @@ class Article
     private StatusEnum $status;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
-    private ?ArticleCategorie $categorie = null;
+    private ?ArticleCategory $categorie = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     private ?User $user = null;
@@ -164,12 +164,12 @@ class Article
         return $this;
     }
 
-    public function getCategorie(): ?ArticleCategorie
+    public function getCategorie(): ?ArticleCategory
     {
         return $this->categorie;
     }
 
-    public function setCategorie(?ArticleCategorie $categorie): static
+    public function setCategorie(?ArticleCategory $categorie): static
     {
         $this->categorie = $categorie;
 
