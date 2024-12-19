@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ArticleCategorieRepository;
+use App\Repository\TopicCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-#[ORM\Entity(repositoryClass: ArticleCategorieRepository::class)]
-class ArticleCategorie
+#[ORM\Entity(repositoryClass: TopicCategoryRepository::class)]
+#[UniqueEntity(['name', 'slug'])]
+class TopicCategory
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,14 +24,14 @@ class ArticleCategorie
     private ?string $slug = null;
 
     /**
-     * @var Collection<int, Article>
+     * @var Collection<int, Topic>
      */
-    #[ORM\OneToMany(targetEntity: Article::class, mappedBy: 'categorie')]
-    private Collection $articles;
+    #[ORM\OneToMany(targetEntity: Topic::class, mappedBy: 'category')]
+    private Collection $topics;
 
     public function __construct()
     {
-        $this->articles = new ArrayCollection();
+        $this->topics = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -62,29 +64,29 @@ class ArticleCategorie
     }
 
     /**
-     * @return Collection<int, Article>
+     * @return Collection<int, Topic>
      */
-    public function getArticles(): Collection
+    public function getTopics(): Collection
     {
-        return $this->articles;
+        return $this->topics;
     }
 
-    public function addArticle(Article $article): static
+    public function addTopic(Topic $topic): static
     {
-        if (!$this->articles->contains($article)) {
-            $this->articles->add($article);
-            $article->setCategorie($this);
+        if (!$this->topics->contains($topic)) {
+            $this->topics->add($topic);
+            $topic->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeArticle(Article $article): static
+    public function removeTopic(Topic $topic): static
     {
-        if ($this->articles->removeElement($article)) {
+        if ($this->topics->removeElement($topic)) {
             // set the owning side to null (unless already changed)
-            if ($article->getCategorie() === $this) {
-                $article->setCategorie(null);
+            if ($topic->getCategory() === $this) {
+                $topic->setCategory(null);
             }
         }
 
