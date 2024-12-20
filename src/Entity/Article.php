@@ -164,12 +164,12 @@ class Article
         $this->status = $status;
         return $this;
     }
-
+  
     public function getCategory(): ?ArticleCategory
     {
         return $this->category;
     }
-
+  
     public function setCategory(?ArticleCategory $category): static
     {
         $this->category = $category;
