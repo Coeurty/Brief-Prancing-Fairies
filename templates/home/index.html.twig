@@ -1,20 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<!-- Carousel Container -->
+<div class="relative w-full mx-auto">
+  <!-- Watermark with adjustable text -->
+  <div class="absolute top-0 left-0 w-full h-full z-10 pointer-events-none flex justify-start items-center"
+      style="background: linear-gradient(to right, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0) 50%);">
+    <!-- Text adjusted based on the window width -->
+    <span class="text-white font-bold opacity-80 ml-4" style="font-size: 5vw;">Your Text Here</span>
+  </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/Cédric/Projet_simplon/Brief-Prancing-Fairies/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>C:/Users/Cédric/Projet_simplon/Brief-Prancing-Fairies/templates/home/index.html.twig</code></li>
-    </ul>
+  <!-- Slide Wrapper -->
+  <div class="overflow-hidden">
+    <div class="flex transition-transform duration-500 ease-in-out" id="carouselSlides">
+      <!-- Slide 1 -->
+      <div class="flex-shrink-0 w-full">
+        <img src="https://picsum.photos/800/300?random=1" alt="Slide 1" class="w-full h-auto">
+      </div>
+      <!-- Slide 2 -->
+      <div class="flex-shrink-0 w-full">
+        <img src="https://picsum.photos/800/300?random=2" alt="Slide 2" class="w-full h-auto">
+      </div>
+      <!-- Slide 3 -->
+      <div class="flex-shrink-0 w-full">
+        <img src="https://picsum.photos/800/300?random=3" alt="Slide 3" class="w-full h-auto">
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation buttons (left and right arrows) -->
+  <button class="absolute top-1/2 left-0 transform -translate-y-1/2 px-4 py-2 text-white bg-black opacity-50 hover:opacity-100 transition-opacity z-20" id="prevButton">
+    &lt;
+  </button>
+  <button class="absolute top-1/2 right-0 transform -translate-y-1/2 px-4 py-2 text-white bg-black opacity-50 hover:opacity-100 transition-opacity z-20" id="nextButton">
+    &gt;
+  </button>
 </div>
+
+
 {% endblock %}
