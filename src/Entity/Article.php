@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ArticleRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
-use App\Enum\StatusEnum;
-use App\Entity\ArticleCategory;
 use App\Entity\User;
 use App\Entity\Comment;
+use App\Enum\StatusEnum;
+use Doctrine\DBAL\Types\Types;
+use App\Entity\ArticleCategory;
+use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -22,6 +22,7 @@ class Article
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
     }
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -52,7 +53,7 @@ class Article
     private StatusEnum $status;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
-    private ?ArticleCategory $categorie = null;
+    private ?ArticleCategory $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     private ?User $user = null;
@@ -163,15 +164,15 @@ class Article
         $this->status = $status;
         return $this;
     }
-
-    public function getCategorie(): ?ArticleCategory
+  
+    public function getCategory(): ?ArticleCategory
     {
-        return $this->categorie;
+        return $this->category;
     }
-
-    public function setCategorie(?ArticleCategory $categorie): static
+  
+    public function setCategory(?ArticleCategory $category): static
     {
-        $this->categorie = $categorie;
+        $this->category = $category;
 
         return $this;
     }

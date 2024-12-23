@@ -12,6 +12,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[UniqueEntity(['title', 'slug'])]
 class Topic
 {
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->messages = new ArrayCollection();
+    }
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -40,11 +46,6 @@ class Topic
 
     #[ORM\ManyToOne(inversedBy: 'topics')]
     private ?TopicCategory $category = null;
-
-    public function __construct()
-    {
-        $this->messages = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
