@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Forum
+{% endblock %}
+
+{% block body %}
+	<main class="my-4 flex flex-col">
+		<div
+			class="w-11/12 sm:w-[640px] mx-auto">
+			{# TODO: faire un fil d'ariane? #}
+			<h1 class="text-lg">Forum -> Catégories ->
+				{{ topic_category.name }}</h1>
+			<div class="mb-4">
+				<div class="flex justify-between bg-[#C44536] text-white rounded-t-lg px-8 flex-wrap">
+					<div class="flex align-middle">
+						<div>{{ topic_category.name }}</div>
+					</div>
+					<div>
+						{{ include('/topic_category/_edit_form.html.twig', {
+							'form': form,
+							'topic_category': topic_category
+						}) }}
+					</div>
+				</div>
+				<div>
+					{% for topic in topic_category.topics %}
+						<div class="flex justify-between odd:bg-white even:bg-[#EDDDD4] {{ loop.last ? 'rounded-b-lg' : '' }}">
+							<span class="ml-4 p-1">{{ topic.title }}</span>
+							<span class="mr-4 p-1">{{ topic.createdAt|date('d/m/y') }}</span>
+						</div>
+					{% else %}
+						<div class="flex justify-between bg-white rounded-b-lg">
+							<span class="ml-4 p-1">Aucun sujet dans cette catégorie</span>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}

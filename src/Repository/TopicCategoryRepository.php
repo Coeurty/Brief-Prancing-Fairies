@@ -16,6 +16,15 @@ class TopicCategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, TopicCategory::class);
     }
 
+    public function findOneBySlug(string $slug): ?TopicCategory
+    {
+        return $this->createQueryBuilder('topic_category')
+            ->andWhere('topic_category.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
 //    /**
 //     * @return TopicCategory[] Returns an array of TopicCategory objects
 //     */
@@ -31,7 +40,7 @@ class TopicCategoryRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?TopicCategory
+    //    public function findOneBySomeField($value): ?TopicCategory
 //    {
 //        return $this->createQueryBuilder('t')
 //            ->andWhere('t.exampleField = :val')
