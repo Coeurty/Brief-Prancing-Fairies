@@ -1,0 +1,15 @@
+{{ form_start(form) }}
+    <div class="mb-6">
+        {{ form_label(form.name, 'Nom de la catégorie', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+        {{ form_widget(form.name, {'attr': {'class': 'block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'}}) }}
+        {{ form_errors(form.name) }}
+    </div>
+    <div>
+        <a href="{{ path('app_article_category_index') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            Retour
+        </a>
+        <button class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            {{ button_label|default('Save') }}
+        </button>
+    </div>
+{{ form_end(form) }}

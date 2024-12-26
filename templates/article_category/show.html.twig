@@ -1,0 +1,30 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}Catégorie d'article{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-bold mb-6">Catégorie d'article</h1>
+
+        <div class="overflow-x-auto rounded-lg border border-gray-200 mb-6">
+            <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+                <tbody class="divide-y divide-gray-200">
+                    <tr>
+                        <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">Id</th>
+                        <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">Nom</th>
+                    </tr>
+                    <tr>
+                        <td class="whitespace-nowrap px-4 py-2 text-gray-900">{{ article_category.id }}</td>
+                        <td class="whitespace-nowrap px-4 py-2 text-gray-900">{{ article_category.name }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="flex justify-between items-center">
+            <a href="{{ path('app_article_category_index') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Retour à la liste
+            </a>
+        </div>
+    </div>
+{% endblock %}
