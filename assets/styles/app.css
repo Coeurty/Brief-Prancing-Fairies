@@ -3,11 +3,19 @@
 @tailwind utilities;
 
 body {
-    background-color: skyblue;
+    background-color: #283D3B;
 }
 
 @layer components {
     .btn {
         @apply px-3 py-1 bg-[#197278] text-white rounded-lg cursor-pointer;
+    }
+
+    .desktop-navbar-link {
+        @apply text-gray-300 hover:bg-[#283D3B] hover:text-white px-3 py-2 rounded-md text-sm font-medium;
+    }
+
+    .mobile-navbar-link {
+        @apply text-gray-300 hover:bg-[#283D3B] hover:text-white block px-3 py-2 rounded-md text-base font-medium;
     }
   }

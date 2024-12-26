@@ -1,26 +1,23 @@
-<nav class="bg-gray-800">
+<nav class="bg-[#197278]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
                 <!-- Logo -->
                 <a href="#" class="text-white text-2xl font-bold">
-                    MyWebsite
+                    CyclOO
                 </a>
                 <!-- Links for larger screens -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                        <a href="#about" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
-                        <a href="#services" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Services</a>
-                        <a href="#contact" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
-                        <a href="{{ path('app_forum_index') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Forum</a>
+                        <a href="{{ path('app_home') }}" class="desktop-navbar-link">Accueil</a>
+                        <a href="{{ path('app_home') }}" class="desktop-navbar-link">Actualités</a>
+                        <a href="{{ path('app_home') }}" class="desktop-navbar-link">Itinéraire</a>
+                        <a href="{{ path('app_forum_index') }}" class="desktop-navbar-link">Forum</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Conditional display based on whether the user is logged in -->
             {% if app.user %}
-                <!-- User Avatar (only visible if the user is logged in) -->
                 <div class="relative">
                     <button 
                         id="user-menu-button" 
@@ -29,7 +26,6 @@
                         aria-expanded="false"
                         aria-haspopup="true"
                     >
-                        <!-- The avatar image of the logged-in user -->
                         <img class="h-8 w-8 rounded-full" src="{{ app.user.getprofilePictureUrl() }}" alt="User Avatar">
                     </button>
 
@@ -43,15 +39,13 @@
                             {# href="{{ path('app_account') }}"  #}
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         >
-                            My Account
+                            Mon compte
                         </a>
-                        
-                        <!-- Link to logout -->
                         <a 
-                            {# href="{{ path('app_logout') }}"  #}
+                            href="{{ path('app_logout') }}" 
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         >
-                            Logout
+                            Deconnexion
                         </a>
                     </div>
                 </div>
@@ -59,16 +53,16 @@
                 <!-- Links for non-logged-in users -->
                 <div class="hidden md:block">
                     <div class="ml-4 flex items-center">
-                        {# <a href="{{ path('app_login') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</a> #}
-                        {# <a href="{{ path('app_register') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Register</a> #}
+                        <a href="{{ path('app_user_login') }}" class="desktop-navbar-link">Connexion</a>
+                        <a href="{{ path('app_register') }}" class="desktop-navbar-link">Inscription</a>
                     </div>
                 </div>
             {% endif %}
 
             <!-- Mobile menu button -->
             <div class="-mr-2 flex md:hidden">
-                <button id="mobile-menu-button" type="button" class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
+                <button id="mobile-menu-button" type="button" class="bg-[#283D3B] inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-expanded="false">
+                    <span class="sr-only">Ouvrir le menu</span>
                     <!-- Hamburger Icon -->
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
@@ -81,14 +75,14 @@
     <!-- Mobile Menu -->
     <div class="md:hidden hidden" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
-            <a href="#about" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
-            <a href="#services" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Services</a>
-            <a href="#contact" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
-            <a href="{{ path('app_forum_index') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Forum</a>
+            <a href="{{ path('app_home') }}" class="mobile-navbar-link">Accueil</a>
+            <a href="{{ path('app_home') }}" class="mobile-navbar-link">Actualités</a>
+            <a href="{{ path('app_home') }}" class="mobile-navbar-link">Itinéraire</a>
+            <a href="{{ path('app_forum_index') }}" class="mobile-navbar-link">Forum</a>
             {% if not app.user %}
-                {# <a href="{{ path('app_login') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Login</a> #}
-                {# <a href="{{ path('app_register') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Register</a> #}
+                <hr/>
+                <a href="{{ path('app_user_login') }}" class="mobile-navbar-link">Connexion</a>
+                <a href="{{ path('app_register') }}" class="mobile-navbar-link">Inscription</a>
             {% endif %}
         </div>
     </div>
