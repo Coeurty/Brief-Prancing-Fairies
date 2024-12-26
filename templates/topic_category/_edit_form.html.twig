@@ -1,0 +1,24 @@
+<div class="flex justify-center">
+	<input type="button" class="cursor-pointer editTopicCategoryBtn" data-topiccategoryid="{{ topic_category.id }}" value="Modifier">
+
+	<div class="editTopicCategoryForm" style="display: none;" data-topiccategoryid={{ topic_category.id }}>
+		{{ form_start(form, {
+			'action': path('app_topic_category_edit', {'id': topic_category.id}),
+			'method': 'POST'
+		}) }}
+
+		<div class="flex justify-center align-middle flex-wrap space-x-2 space-y-1 py-1">
+			{{ form_widget(form.name, {
+				'attr': {
+					'class': 'text-black p-1',
+					'placeholder': 'Nom de la catégorie'
+				}
+        	}) }}
+			<button class="btn">Valider</button>
+			<input type="button" class="btn bg-gray-500 cancelEditTopicCategoryBtn" value="Annuler" data-topiccategoryid="{{ topic_category.id }}">
+		</div>
+		{{ form_end(form) }}
+
+		{{ include('/topic_category/_delete_form.html.twig', {'topic_category': topic_category}) }}
+	</div>
+</div>

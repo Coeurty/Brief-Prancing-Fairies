@@ -1,0 +1,25 @@
+<div class="flex justify-center">
+    <input type="button" id="newTopicCategoryBtn" class="btn" value="Nouvelle catégorie">
+
+	{{ form_start(new_topic_category_form, {
+        'action': path('app_topic_category_new'),
+        'method': 'POST',
+        'attr': {
+            'id': 'newTopicCategoryForm', 
+            'style': 'display: none;'
+        }
+    }) }}
+
+	<div class="flex justify-center align-middle flex-wrap space-x-2 space-y-1">
+		{{ form_widget(new_topic_category_form.name, {
+				'attr': {
+					'class': 'p-1',
+                    'placeholder': 'Nom de la catégorie'
+				}
+			}) }}
+		<button class="btn">Valider</button>
+		<input type="button" class="btn bg-gray-500" value="Annuler" id="cancelNewTopicCategoryBtn">
+	</div>
+
+	{{ form_end(new_topic_category_form) }}
+</div>
