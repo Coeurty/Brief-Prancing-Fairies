@@ -1,20 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}Inscription
+{% endblock %}
 
 {% block body %}
-    <h1>Inscription</h1>
+	<main class="flex items-center justify-center w-11/12 md:w-1/2 mx-auto my-10 text-white">
+		{{ form_start(registrationForm, { 
+        'attr': { 
+            'class': 'w-full max-w-md bg-[#197278] shadow-md rounded-lg p-6 space-y-4' 
+        } 
+    }) }}
 
-    {{ form_errors(registrationForm) }}
+		<h1 class="text-2xl font-bold mb-6 text-center">Inscription</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.nickname) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+		{% if form_errors(registrationForm) %}
+			<div class="text-red-500 text-sm">
+				{{ form_errors(registrationForm) }}
+			</div>
+		{% endif %}
 
-        <button type="submit" class="btn">Inscription</button>
-    {{ form_end(registrationForm) }}
+		<div>
+			{{ form_label(registrationForm.email, null, { 'label_attr': { 'class': 'block text-sm font-medium' } }) }}
+			{{ form_widget(registrationForm.email, { 'attr': 
+                {'class': 'w-full border-gray-300 rounded-md shadow-sm p-2 mt-1 text-black'} 
+            }) }}
+			{{ form_errors(registrationForm.email) }}
+		</div>
+
+		<div>
+			{{ form_label(registrationForm.nickname, null, { 'label_attr': { 'class': 'block text-sm font-medium' } }) }}
+			{{ form_widget(registrationForm.nickname, { 'attr': { 'class': 'w-full border-gray-300 rounded-md shadow-sm p-2 mt-1 text-black' } }) }}
+			{{ form_errors(registrationForm.nickname) }}
+		</div>
+
+		<div>
+			{{ form_label(registrationForm.plainPassword, 'Mot de passe', { 'label_attr': { 'class': 'block text-sm font-medium' } }) }}
+			{{ form_widget(registrationForm.plainPassword, { 'attr': { 'class': 'w-full border-gray-300 rounded-md shadow-sm p-2 mt-1 text-black' } }) }}
+			{{ form_errors(registrationForm.plainPassword) }}
+		</div>
+
+		<div class="flex items-center">
+			{{ form_widget(registrationForm.agreeTerms, { 'attr': { 'class': 'h-4 w-4 border-gray-300 rounded' } }) }}
+			{{ form_label(registrationForm.agreeTerms, "J'accepte les conditions d'utilisation", { 'label_attr': { 'class': 'ml-2 block text-sm' } }) }}
+			{{ form_errors(registrationForm.agreeTerms) }}
+		</div>
+
+		<div>
+			<button type="submit" class="w-full btn bg-[#C44536]">
+				Inscription
+			</button>
+		</div>
+
+		<div>
+			<a href="{{ path('app_user_login') }}" class="block text-center text-sm mt-4">
+				Déjà inscrit ? Connectez-vous
+			</a>
+		</div>
+
+		{{ form_end(registrationForm) }}
+	</main>
 {% endblock %}
