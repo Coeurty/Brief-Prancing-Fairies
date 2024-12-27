@@ -2,40 +2,18 @@
 
 namespace App\EventListener;
 
+use App\EventListener\AbstractEntityListener;
 use App\Entity\ArticleCategory;
-use App\Service\Slugger;
-use Doctrine\ORM\Event\PrePersistEventArgs;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 
-class CategoryListener
+class CategoryListener extends AbstractEntityListener
 {
-    private $slugger;
-
-    public function __construct(Slugger $slugger)
+    protected function supports($entity): bool
     {
-        $this->slugger = $slugger;
+        return $entity instanceof ArticleCategory;
     }
 
-    public function prePersist(PrePersistEventArgs $args): void
+    protected function getSlugSource($entity): string
     {
-        $entity = $args->getObject();
-
-        if (!$entity instanceof ArticleCategory) {
-            return;
-        }
-
-        $entity->setSlug($this->slugger->slugify($entity->getName()));
-    }
-
-    public function preUpdate(PreUpdateEventArgs $args): void
-    {
-        $entity = $args->getObject();
-
-        if (!$entity instanceof ArticleCategory) {
-            return;
-        }
-
-        $entity->setSlug($this->slugger->slugify($entity->getName()));
+        return $entity->getName();
     }
 }
-
