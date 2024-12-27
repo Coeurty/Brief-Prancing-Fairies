@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-4">{{ article.title }}</h1>
+
+        <div class="mb-6">
+            <img src="{{ article.coverImage }}" alt="{{ article.title }}" class="w-full h-auto rounded-lg shadow-md">
+        </div>
+
+        <div class="mb-6">
+            <p class="text-gray-700 text-lg">{{ article.standFirst }}</p>
+        </div>
+
+        <div class="mb-6">
+            <p class="text-gray-500 text-sm">Créé le: {{ article.createdAt|date('d/m/Y H:i') }}</p>
+        </div>
+
+        <div class="mb-6">
+            <p class="text-gray-500 text-sm">Mis à jour le: {{ article.updatedAt|date('d/m/Y H:i') }}</p>
+        </div>
+
+        <div class="prose max-w-none">
+            {{ article.content|raw }}
+        </div>
+
+        <div class="mt-8">
+            <a href="{{ path('app_article_index') }}" class="text-blue-600 hover:underline">Retour à la liste</a>
+        </div>
+    </div>
+{% endblock %}

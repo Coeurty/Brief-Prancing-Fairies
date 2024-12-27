@@ -2,18 +2,18 @@
 
 namespace App\EventListener;
 
+use App\Entity\Article;
 use App\EventListener\AbstractEntityListener;
-use App\Entity\ArticleCategory;
 
-class CategoryListener extends AbstractEntityListener
+class ArticleListener extends AbstractEntityListener
 {
     protected function supports($entity): bool
     {
-        return $entity instanceof ArticleCategory;
+        return $entity instanceof Article;
     }
 
     protected function getSlugSource($entity): string
     {
-        return $entity->getName();
+        return $entity->getTitle();
     }
 }
