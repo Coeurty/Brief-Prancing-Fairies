@@ -40,5 +40,62 @@
   </button>
 </div>
 
+<!-- Map Container -->
+
+<div class="flex flex-col lg:flex-row h-screen">
+  
+  <!-- Sidebar -->
+  <div class="lg:w-1/4 w-full bg-gray-100 p-4 shadow-lg overflow-y-auto lg:h-full">
+    <h2 class="text-xl font-bold mb-4">Traces GPX</h2>
+    
+    <!-- Stats Display -->
+    <div id="track-stats" class="mb-4 p-3 bg-white rounded shadow-sm hidden">
+      <h3 class="font-semibold mb-2">Statistique du tracé</h3>
+      <div id="stats-content" class="text-sm mb-2"></div>
+      <div id="estimated-time" class="text-sm"></div>
+    </div>
+
+    <ul id="gpx-list" class="space-y-2">
+      <li data-url="/gpx/EuroVelo 5 Via_Romea.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">Euro Vélo Nord Complète</li>
+      <li data-url="/gpx/Calais-St-Omer.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">Calais->St-Omer</li>
+      <li data-url="/gpx/St-Omer-Bethunes.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">St-Omer->Béthunes</li>
+      <li data-url="/gpx/Bethunes-Lens.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">Béthunes->Lens</li>
+      <li data-url="/gpx/Lens-Lille.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">Lens->Lille</li>
+      <li data-url="/gpx/lille-wattrelos.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">Lille->Wattrelos</li>
+    </ul>
+    
+    <div class="mt-4 space-y-4">
+      <div>
+        <label for="map-style" class="block text-sm font-medium text-gray-700">Choisir le fond de map</label>
+        <select id="map-style" class="mt-1 p-2 border rounded w-full">
+          <option value="osm">OpenStreetMap</option>
+          <option value="esri">Esri Satellite</option>
+          <option value="terrain">Terrain</option>
+        </select>
+      </div>
+
+      <div class="relative">
+        <label class="block text-sm font-medium text-gray-700">Importer un GPX</label>
+        <input type="file" id="gpx-upload" class="hidden" accept=".gpx" />
+        <button onclick="document.getElementById('gpx-upload').click()" class="mt-1 w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Votre tracer GPX</button>
+        <div id="file-name" class="text-sm mt-1 text-gray-600"></div>
+      </div>
+
+      <button id="download-gpx" class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 disabled:opacity-50" disabled>Télécharger au format GPX</button>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loading" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+      <div class="bg-white p-4 rounded-lg">
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
+        <p class="mt-2">Loading GPX...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map container -->
+  <div id="map" class="flex-grow w-full"></div>
+
+</div>
 
 {% endblock %}
