@@ -10,6 +10,7 @@ import './styles/app.css';
 import './JS/navbar.js';
 import './JS/topicCategory.js';
 import './JS/slider.js';
+import './JS/map.js';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
