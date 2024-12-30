@@ -1,0 +1,14 @@
+<p class="text-white mb-4 italic">
+	{% for breadcrumb in breadcrumbs %}
+		{% if breadcrumb.url %}
+			<span>
+				<a href="{{ breadcrumb.url }}">{{ breadcrumb.label }}</a>
+			</span>
+		{% else %}
+			<span class="text-[#C44536] font-bold" aria-current="page">{{ breadcrumb.label }}</span>
+		{% endif %}
+		{% if not loop.last %}
+			<span>-></span>
+		{% endif %}
+	{% endfor %}
+</p>

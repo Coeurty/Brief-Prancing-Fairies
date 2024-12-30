@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification "{{ topic.title }}" - Forum
+{% endblock %}
+
+{% block body %}
+	<main class="flex items-center justify-center flex-col w-11/12 md:w-1/2 mx-auto my-10 text-white">
+		<div class="w-full">
+			{% include '/partials/_breadcrumbs.html.twig' with { breadcrumbs: breadcrumbs } %}
+		</div>
+		<div class="w-full bg-[#197278] rounded-md p-6">
+			<h1 class="text-2xl font-bold mb-6 text-center">Modification de sujet</h1>
+			<div class="w-full">
+				{{ include('topic/_form.html.twig') }}
+				<div class="flex justify-between mt-4">
+					<button onclick="alert('to implement')" class="btn bg-[#C44536] hover:bg-[#96352b]">
+						Archiver
+					</button>
+					{{ include('topic/_delete_form.html.twig') }}
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
