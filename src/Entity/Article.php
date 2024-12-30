@@ -31,7 +31,7 @@ class Article
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
@@ -53,6 +53,7 @@ class Article
     private StatusEnum $status;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?ArticleCategory $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
@@ -150,7 +151,7 @@ class Article
     /**
      * @var Collection<int, Comment>
      */
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'article')]
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'article', orphanRemoval: true)]
     private Collection $comments;
 
 
