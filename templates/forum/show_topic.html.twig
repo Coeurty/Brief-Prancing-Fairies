@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ topic.title }}
+	- Forum
+{% endblock %}
+
+{% block body %}
+	<main class="w-11/12 sm:w-[640px] mx-auto my-4">
+		{% include '/partials/_breadcrumbs.html.twig' with { breadcrumbs: breadcrumbs } %}
+
+		{% if (app.user and app.user.id == topic.user.id) or is_granted('ROLE_MODERATOR') %}
+			<div class="flex justify-end">
+				<a class="text-white hover:text-[#C44536]" href="{{ path('app_topic_edit', {'id': topic.id }) }}">Modifier</a>
+			</div>
+		{% endif %}
+		<p class="p-1 bg-[#C44536] text-white text-justify rounded-t-lg">{{ topic.title }}</p>
+		<p class="p-1 bg-white italic text-justify rounded-b-lg">{{ topic.strandFirst }}</p>
+
+		<section class="flex flex-col mt-4 gap-y-4">
+			{% for message in topic.messages %}
+				<div class="flex">
+					<div class="flex flex-col items-center ml-[-8px] mt-2 mr-2 mb-4 flex-shrink-0">
+						<img class="h-10 w-10 rounded-full" src="{{ message.user.getprofilePictureUrl() }}" alt="User Avatar">
+						<p class="text-xs text-white text-center break-words w-[75px] sm:w-[100px]">{{ message.user.nickname }}</p>
+					</div>
+					<div class="flex flex-col flex-1 justify-between bg-[#EDDDD4] rounded-lg p-2">
+						<p class="">{{ message.content }}</p>
+						<p class="text-xs text-end text-gray-600">{{ message.createdAt|date('d/m/y h:m')}}</p>
+					</div>
+				</div>
+			{% endfor %}
+		</section>
+	</main>
+{% endblock %}

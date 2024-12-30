@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_topic_delete', {'id': topic.id}) }}" onsubmit="return confirm('Confirmez la suppression de ce sujet.');">
+	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ topic.id) }}">
+	<button class="btn bg-[#C44536] hover:bg-[#96352b]">Supprimer</button>
+</form>
