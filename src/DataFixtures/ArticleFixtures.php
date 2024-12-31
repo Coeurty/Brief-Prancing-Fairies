@@ -7,6 +7,7 @@ use App\Entity\Article;
 use App\Entity\ArticleCategory;
 use App\DataFixtures\UserFixtures;
 use Faker\Factory as FakerFactory;
+use App\DataFixtures\Traits\DateTrait;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\ArticleCategoryFixtures;
@@ -15,6 +16,8 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
+    use DateTrait;
+
     private $faker;
     private $slugger;
 
@@ -35,6 +38,8 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             $article->setContent($this->faker->text(2000));
             $article->setCategory($this->getReference('article_category_' . $this->faker->numberBetween(0, 4), ArticleCategory::class));
             $article->setUser($this->getReference('moderator_' . $this->faker->numberBetween(0, 2), User::class));
+            $article->setCreatedAt($this->createRandomDate());
+            $article->setUpdatedAt($this->createRandomDate($article->getCreatedAt()));
             $manager->persist($article);
 
             $this->addReference('article_' . $i, $article);
