@@ -31,5 +31,13 @@
 				</div>
 			{% endfor %}
 		</section>
+
+		<div class="flex justify-center mt-4">
+			{% if app.user %}
+				{{ include('forum_message/_new_form.html.twig', {'form': newMessageForm }) }}
+			{% else %}
+				<a class="btn" href="{{ path('app_user_login') }}">Connectez vous pour écrire un message</a>
+			{% endif %}
+		</div>
 	</main>
 {% endblock %}
