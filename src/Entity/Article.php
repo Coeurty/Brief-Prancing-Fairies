@@ -19,8 +19,6 @@ class Article
     {
         $this->status = StatusEnum::PENDING;
         $this->comments = new ArrayCollection();
-        $this->createdAt = new \DateTimeImmutable();
-        $this->updatedAt = new \DateTimeImmutable();
     }
 
     #[ORM\Id]
@@ -165,12 +163,12 @@ class Article
         $this->status = $status;
         return $this;
     }
-  
+
     public function getCategory(): ?ArticleCategory
     {
         return $this->category;
     }
-  
+
     public function setCategory(?ArticleCategory $category): static
     {
         $this->category = $category;
