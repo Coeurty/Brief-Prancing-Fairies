@@ -10,6 +10,9 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class TopicCategoryFixtures extends Fixture
 {
+    private $faker;
+    private $slugger;
+
     public function __construct()
     {
         $this->faker = FakerFactory::create('fr_FR');
@@ -23,6 +26,8 @@ class TopicCategoryFixtures extends Fixture
             $category->setName($this->faker->sentence(3));
             $category->setSlug($this->slugger->slug(strtolower($category->getName())));
             $manager->persist($category);
+
+            $this->addReference('topic_category_'.$i, $category);
         }
         $manager->flush();
     }
