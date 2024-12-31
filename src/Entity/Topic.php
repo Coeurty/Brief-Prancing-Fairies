@@ -14,7 +14,6 @@ class Topic
 {
     public function __construct()
     {
-        $this->createdAt = new \DateTimeImmutable();
         $this->messages = new ArrayCollection();
     }
 
