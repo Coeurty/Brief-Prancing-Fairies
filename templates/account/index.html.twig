@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccountController!{% endblock %}
+
+{% block body %}
+
+<img class="h-8 w-8 rounded-full" src="{{ app.user.getprofilePictureUrl() }}" alt="User Avatar">
+
+{% endblock %}
