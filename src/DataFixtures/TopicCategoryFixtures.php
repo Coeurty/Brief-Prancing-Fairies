@@ -27,7 +27,7 @@ class TopicCategoryFixtures extends Fixture
             $category->setSlug($this->slugger->slug(strtolower($category->getName())));
             $manager->persist($category);
 
-            $this->addReference('topic_category_'.$i, $category);
+            $this->addReference('topic_category_' . $i, $category);
         }
         $manager->flush();
     }
