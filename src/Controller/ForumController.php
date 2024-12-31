@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Topic;
+use App\Entity\Message;
 use App\Entity\TopicCategory;
+use App\Form\MessageType;
 use App\Form\TopicCategoryType;
 use App\Repository\TopicCategoryRepository;
 use App\Repository\TopicRepository;
@@ -98,9 +99,14 @@ final class ForumController extends AbstractController
             ['label' => $topic->getTitle(), 'name' => null]
         ]);
 
+        $message = new Message();
+        $message->setTopic($topic);
+        $newMessageForm = $this->createForm(MessageType::class, $message);
+
         return $this->render('forum/show_topic.html.twig', [
             'breadcrumbs' => $breadcrumbs,
             'topic' => $topic,
+            'newMessageForm' => $newMessageForm,
         ]);
     }
 }
