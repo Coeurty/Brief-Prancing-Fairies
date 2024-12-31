@@ -18,4 +18,8 @@ body {
     .mobile-navbar-link {
         @apply text-gray-300 hover:bg-[#283D3B] hover:text-white block px-3 py-2 rounded-md text-base font-medium;
     }
+    
+    .track-item {
+        @apply p-2 bg-gray-200 rounded hover:bg-gray-300 cursor-pointer transition-colors;
+    }
   }
