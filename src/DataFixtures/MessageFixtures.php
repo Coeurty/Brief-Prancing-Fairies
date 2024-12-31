@@ -18,23 +18,22 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class MessageFixtures extends Fixture implements DependentFixtureInterface
 {
+    private $faker;
+
     public function __construct()
     {
         $this->faker = FakerFactory::create('fr_FR');
-        $this->slugger = new AsciiSlugger();
     }
 
     public function load(ObjectManager $manager): void
     {
-        $users = $manager->getRepository(User::class)->findAll();
-        $Topic = $manager->getRepository(Topic::class)->findAll();
-
         for ($i = 0; $i < 30; $i++) {
             $message = new Message();
             $message->setContent($this->faker->sentence(10));
             $message->setIp($this->faker->ipv4);
-            $message->setUser($this->faker->randomElement($users));
-            $message->setTopic($this->faker->randomElement($Topic));
+            $message->setUser($this->getReference('user_' . $this->faker->numberBetween(0, 9), User::class));
+            $message->setTopic(($this->getReference('topic_' . $this->faker->numberBetween(0, 9), Topic::class)));
+
             $manager->persist($message);
         }
 
