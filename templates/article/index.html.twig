@@ -15,6 +15,9 @@
         </div>
 
         {{ include("/article/partials/_article_list.html.twig", {"articles": articles}) }}
+        <div class="col-span-full text-center">
+          {{ knp_pagination_render(articles) }}
+        </div>
     </div>
 </div>
 {% endblock %}

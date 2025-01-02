@@ -16,6 +16,13 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+    public function findAllPaginated()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.createdAt', 'DESC')
+            ->getQuery();
+    }
+
 //    /**
 //     * @return Article[] Returns an array of Article objects
 //     */
