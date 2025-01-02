@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Comment;
 use App\Form\ArticleType;
 use App\Form\CommentType;
+use App\Service\PaginationService;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,11 +17,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/article')]
 final class ArticleController extends AbstractController
 {
-    #[Route(name: 'app_article_index', methods: ['GET'])]
-    public function index(ArticleRepository $articleRepository): Response
+    private PaginationService $paginationService;
+
+    public function __construct(PaginationService $paginationService)
     {
+        $this->paginationService = $paginationService;
+    }
+
+    #[Route(name: 'app_article_index', methods: ['GET'])]
+    public function index(Request $request): Response
+    {
+        $paginatedArticle = $this->paginationService->paginate($request);
+
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $paginatedArticle,
         ]);
     }
 
