@@ -19,9 +19,9 @@
 
             {% if app.user %}
                 <div class="relative">
-                    <button 
-                        id="user-menu-button" 
-                        type="button" 
+                    <button
+                        id="user-menu-button"
+                        type="button"
                         class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                         aria-expanded="false"
                         aria-haspopup="true"
@@ -30,19 +30,33 @@
                     </button>
 
                     <!-- Dropdown menu -->
-                    <div 
-                        id="user-menu" 
+                    <div
+                        id="user-menu"
                         class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
                     >
-                        <!-- Link to the user's account page -->
-                        <a 
+
+                        {% if is_granted('ROLE_MODERATOR') %}
+                        <a
+                        href="{{ path('app_article_new') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                            Créer un article
+                        </a>
+                        <a
+                        href="{{ path('app_article_category_index') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                            Categories du blog
+                        </a>
+                        {% endif %}
+                        <a
                             {# href="{{ path('app_account') }}"  #}
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         >
                             Mon compte
                         </a>
-                        <a 
-                            href="{{ path('app_logout') }}" 
+                        <a
+                            href="{{ path('app_logout') }}"
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         >
                             Deconnexion
