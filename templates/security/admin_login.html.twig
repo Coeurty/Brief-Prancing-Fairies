@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}{% endblock %}Connexion administrateur - CyclOO</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+			<link href="{{ asset('build/app.css') }}" rel="stylesheet">
+		{% endblock %}
+	</head>
+	<body>
+		<main class="flex items-center justify-center w-11/12 md:w-1/2 mx-auto my-10 text-white">
+			<form method="post" class="w-full max-w-md bg-[#197278] shadow-md rounded-lg p-6">
+				{% if error %}
+					<div class="mb-4 text-red-500 text-sm">
+						{{ error.messageKey|trans(error.messageData, 'security') }}
+					</div>
+				{% endif %}
+
+				<h1 class="text-2xl font-bold mb-6 text-center">Connexion administrateur</h1>
+
+				<div class="mb-4">
+					<label for="username" class="block text-sm font-medium">Adresse email</label>
+					<input type="email" name="_username" id="username" class="w-full border-gray-300 rounded-md shadow-sm  p-2 mt-1 text-black" autocomplete="email" required autofocus>
+				</div>
+
+				<div class="mb-4">
+					<label for="password" class="block text-sm font-medium">Mot de passe</label>
+					<input
+					type="password" name="_password" id="password" class="w-full border-gray-300 rounded-md shadow-sm  p-2 mt-1 text-black" autocomplete="current-password" required>
+					{# TODO: Implement this feature #}
+					<a class="text-xs" href="">Mot de passe oublié</a>
+				</div>
+
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+				<div>
+					<button type="submit" class="w-full btn bg-[#C44536]">
+						Connexion
+					</button>
+				</div>
+			</form>
+		</main>
+	</body>
+</html>
