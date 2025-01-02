@@ -4,14 +4,16 @@ namespace App\Controller;
 
 use App\Entity\ArticleCategory;
 use App\Form\ArticleCategoryType;
-use App\Repository\ArticleCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ArticleCategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/article/categories')]
+#[IsGranted('ROLE_MODERATOR')]
 final class ArticleCategoryController extends AbstractController
 {
     #[Route(name: 'app_article_category_index', methods: ['GET'])]
