@@ -10,7 +10,7 @@
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <a href="{{ path('app_home') }}" class="desktop-navbar-link">Accueil</a>
-                        <a href="{{ path('app_home') }}" class="desktop-navbar-link">Actualités</a>
+                        <a href="{{ path('app_article_index') }}" class="desktop-navbar-link">Actualités</a>
                         <a href="{{ path('app_itinerary') }}" class="desktop-navbar-link">Itinéraire</a>
                         <a href="{{ path('app_forum_index') }}" class="desktop-navbar-link">Forum</a>
                     </div>
@@ -76,7 +76,7 @@
     <div class="md:hidden hidden" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <a href="{{ path('app_home') }}" class="mobile-navbar-link">Accueil</a>
-            <a href="{{ path('app_home') }}" class="mobile-navbar-link">Actualités</a>
+            <a href="{{ path('app_article_index') }}" class="mobile-navbar-link">Actualités</a>
             <a href="{{ path('app_itinerary') }}" class="mobile-navbar-link">Itinéraire</a>
             <a href="{{ path('app_forum_index') }}" class="mobile-navbar-link">Forum</a>
             {% if not app.user %}
