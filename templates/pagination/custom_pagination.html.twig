@@ -1,0 +1,39 @@
+{% if pageCount > 1 %}
+    <div class="flex justify-center items-center gap-2 mt-8">
+        {% if first is defined and current != first %}
+            <a href="{{ path(route, knp_pagination_query(query, first)) }}" class="px-3 py-2 rounded-lg bg-white text-[#197278] hover:bg-[#197278] hover:text-white transition-colors">
+                &lt;&lt;
+            </a>
+        {% endif %}
+
+        {% if previous is defined %}
+            <a href="{{ path(route, knp_pagination_query(query, previous)) }}" class="px-3 py-2 rounded-lg bg-white text-[#197278] hover:bg-[#197278] hover:text-white transition-colors">
+                &lt;
+            </a>
+        {% endif %}
+
+        {% for page in pagesInRange %}
+            {% if page != current %}
+                <a href="{{ path(route, knp_pagination_query(query, page)) }}" class="px-3 py-2 rounded-lg bg-white text-[#197278] hover:bg-[#197278] hover:text-white transition-colors">
+                    {{ page }}
+                </a>
+            {% else %}
+                <span class="px-3 py-2 rounded-lg bg-[#197278] text-white font-bold">
+                    {{ page }}
+                </span>
+            {% endif %}
+        {% endfor %}
+
+        {% if next is defined %}
+            <a href="{{ path(route, knp_pagination_query(query, next)) }}" class="px-3 py-2 rounded-lg bg-white text-[#197278] hover:bg-[#197278] hover:text-white transition-colors">
+                &gt;
+            </a>
+        {% endif %}
+
+        {% if last is defined and current != last %}
+            <a href="{{ path(route, knp_pagination_query(query, last)) }}" class="px-3 py-2 rounded-lg bg-white text-[#197278] hover:bg-[#197278] hover:text-white transition-colors">
+                &gt;&gt;
+            </a>
+        {% endif %}
+    </div>
+{% endif %}
