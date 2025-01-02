@@ -7,6 +7,7 @@ use App\Entity\Topic;
 use App\Entity\TopicCategory;
 use App\DataFixtures\UserFixtures;
 use Faker\Factory as FakerFactory;
+use App\DataFixtures\Traits\DateTrait;
 use Doctrine\Persistence\ObjectManager;
 use App\DataFixtures\TopicCategoryFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -17,6 +18,11 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class TopicFixtures extends Fixture implements DependentFixtureInterface
 {
+    use DateTrait;
+
+    private $faker;
+    private $slugger;
+
     public function __construct()
     {
         $this->faker = FakerFactory::create('fr_FR');
@@ -25,17 +31,18 @@ class TopicFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $users = $manager->getRepository(User::class)->findAll();
-        $TopicCategories = $manager->getRepository(TopicCategory::class)->findAll();
 
         for ($i = 0; $i < 10; $i++) {
             $topic = new Topic();
             $topic->setTitle($this->faker->sentence(6));
             $topic->setSlug($this->slugger->slug(strtolower($topic->getTitle())));
             $topic->setStrandFirst($this->faker->sentence(12));
-            $topic->setUser($this->faker->randomElement($users));
-            $topic->setCategory($this->faker->randomElement($TopicCategories));
+            $topic->setUser($this->getReference('user_' . $this->faker->numberBetween(0, 9), User::class));
+            $topic->setCategory($this->getReference('topic_category_' . $this->faker->numberBetween(0, 4), TopicCategory::class));
+            $topic->setCreatedAt($this->createRandomDate());
             $manager->persist($topic);
+
+            $this->addReference('topic_' . $i, $topic);
         }
 
         $manager->flush();

@@ -1,61 +1,124 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-
 <!-- Carousel Container -->
-<div class="relative w-full mx-auto">
+<div class="relative w-full mx-auto mb-8">
   <!-- Watermark with adjustable text -->
   <div class="absolute top-0 left-0 w-full h-full z-10 pointer-events-none flex justify-start items-center"
-      style="background: linear-gradient(to right, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0) 50%);">
-    <!-- Text adjusted based on the window width -->
-    <span class="text-white font-bold opacity-80 ml-4" style="font-size: 5vw;">Your Text Here</span>
+      style="background: linear-gradient(to right, rgba(40, 61, 59, 0.7) 50%, rgba(40, 61, 59, 0) 50%);">
+    <span class="text-white font-bold opacity-80 ml-4" style="font-size: 5vw;">CyclOO</span>
   </div>
 
   <!-- Slide Wrapper -->
-  <div class="overflow-hidden">
+  <div class="overflow-hidden rounded-lg shadow-lg">
     <div class="flex transition-transform duration-500 ease-in-out" id="carouselSlides">
-      <!-- Slide 1 -->
+      <!-- Slides -->
       <div class="flex-shrink-0 w-full">
         <img src="https://picsum.photos/800/300?random=1" alt="Slide 1" class="w-full h-auto">
       </div>
-      <!-- Slide 2 -->
       <div class="flex-shrink-0 w-full">
         <img src="https://picsum.photos/800/300?random=2" alt="Slide 2" class="w-full h-auto">
       </div>
-      <!-- Slide 3 -->
       <div class="flex-shrink-0 w-full">
         <img src="https://picsum.photos/800/300?random=3" alt="Slide 3" class="w-full h-auto">
       </div>
     </div>
   </div>
 
-  <!-- Navigation buttons (left and right arrows) -->
-  <button class="absolute top-1/2 left-0 transform -translate-y-1/2 px-4 py-2 text-white bg-black opacity-50 hover:opacity-100 transition-opacity z-20" id="prevButton">
+  <!-- Navigation buttons -->
+  <button class="absolute top-1/2 left-0 transform -translate-y-1/2 px-4 py-2 text-white bg-[#283D3B] opacity-50 hover:opacity-100 transition-opacity z-20 rounded-r" id="prevButton">
     &lt;
   </button>
-  <button class="absolute top-1/2 right-0 transform -translate-y-1/2 px-4 py-2 text-white bg-black opacity-50 hover:opacity-100 transition-opacity z-20" id="nextButton">
+  <button class="absolute top-1/2 right-0 transform -translate-y-1/2 px-4 py-2 text-white bg-[#283D3B] opacity-50 hover:opacity-100 transition-opacity z-20 rounded-l" id="nextButton">
     &gt;
   </button>
 </div>
 
-<!-- Map Container -->
+<div class="py-8 bg-gradient-to-b from-[#283D3B] to-[#197278]">
+    <div class="container mx-auto px-4">
+        <!-- En-tête -->
+        <div class="mb-8 text-center">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+                Nos Articles
+            </h1>
+            <p class="text-gray-200 max-w-2xl mx-auto">
+                Découvrez nos derniers articles sur le cyclotourisme et les itinéraires vélo
+            </p>
+        </div>
 
-<div id="itineraire" class="flex flex-col lg:flex-row h-screen">
-  
+        <!-- Grille d'articles -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for article in articles %}
+                <article class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                    <!-- Image -->
+                    <div class="relative h-48 overflow-hidden">
+                        <img
+                            src="{{ article.coverImage }}"
+                            alt="{{ article.title }}"
+                            class="w-full h-full object-cover"
+                        />
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent h-24"></div>
+                    </div>
+
+                    <!-- Contenu -->
+                    <div class="p-6">
+                        <!-- Titre -->
+                        <h3 class="text-xl font-bold text-[#283D3B] mb-3 line-clamp-2">
+                            {{ article.title }}
+                        </h3>
+
+                        <!-- Résumé -->
+                        <p class="text-gray-600 mb-4 line-clamp-3">
+                            {{ article.standFirst }}
+                        </p>
+
+                        <!-- Lien -->
+                        <div class="flex justify-between items-center">
+                            <a
+                                href="{{ path('app_article_show', {'slug': article.slug}) }}"
+                                class="inline-flex items-center gap-2 text-[#197278] hover:text-[#283D3B] font-medium transition-colors"
+                            >
+                                <span>Lire l'article</span>
+                                <svg
+                                    class="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 5l7 7-7 7"
+                                    />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Map Section -->
+<section class="h-screen bg-gradient-to-b from-[#197278] to-[#283D3B] mb-8">
+<div class="flex flex-col h-full w-11/12 md:w-[720px] mx-auto">
   <!-- Sidebar -->
-  <div class="lg:w-1/4 w-full bg-gray-100 p-4 shadow-lg overflow-y-auto lg:h-full">
-    <h2 class="text-xl font-bold mb-4">Traces GPX</h2>
-    
+  {# TODO: Remove the sidebar (useless here), problem with js #}
+  <div style="display: none;" class="lg:w-1/4 w-full bg-[#EDDDD4] p-4 lg:rounded-l-lg">
+    <h2 class="text-xl font-bold mb-4 text-[#283D3B]">Traces GPX</h2>
+
     <!-- Stats Display -->
     <div id="track-stats" class="mb-4 p-3 bg-white rounded shadow-sm hidden">
-      <h3 class="font-semibold mb-2">Statistique du tracé</h3>
-      <div id="stats-content" class="text-sm mb-2"></div>
-      <div id="estimated-time" class="text-sm"></div>
+      <h3 class="font-semibold mb-2 text-[#197278]">Statistiques du tracé</h3>
+      <div id="stats-content" class="text-sm mb-2 text-gray-600"></div>
+      <div id="estimated-time" class="text-sm text-gray-600"></div>
     </div>
 
-    <ul id="gpx-list" class="space-y-2">
+     <ul id="gpx-list" class="space-y-2">
       <li data-url="/gpx/EuroVelo 5 Via_Romea.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">Euro Vélo Nord Complète</li>
       <li data-url="/gpx/Calais-St-Omer.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">Calais->St-Omer</li>
       <li data-url="/gpx/St-Omer-Bethunes.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">St-Omer->Béthunes</li>
@@ -63,11 +126,11 @@
       <li data-url="/gpx/Lens-Lille.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">Lens->Lille</li>
       <li data-url="/gpx/lille-wattrelos.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">Lille->Wattrelos</li>
     </ul>
-    
+
     <div class="mt-4 space-y-4">
       <div>
-        <label for="map-style" class="block text-sm font-medium text-gray-700">Choisir le fond de map</label>
-        <select id="map-style" class="mt-1 p-2 border rounded w-full">
+        <label class="block text-sm font-medium text-[#283D3B]">Fond de carte</label>
+        <select id="map-style" class="mt-1 p-2 border rounded w-full focus:border-[#197278] focus:ring-[#197278]">
           <option value="osm">OpenStreetMap</option>
           <option value="esri">Esri Satellite</option>
           <option value="terrain">Terrain</option>
@@ -75,27 +138,29 @@
       </div>
 
       <div class="relative">
-        <label class="block text-sm font-medium text-gray-700">Importer un GPX</label>
+        <label class="block text-sm font-medium text-[#283D3B]">Import GPX</label>
         <input type="file" id="gpx-upload" class="hidden" accept=".gpx" />
-        <button onclick="document.getElementById('gpx-upload').click()" class="mt-1 w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Votre tracer GPX</button>
+        <button onclick="document.getElementById('gpx-upload').click()"
+                class="mt-1 w-full bg-[#197278] text-white p-2 rounded hover:bg-[#283D3B] transition-colors">
+          Charger un fichier GPX
+        </button>
         <div id="file-name" class="text-sm mt-1 text-gray-600"></div>
       </div>
 
-      <button id="download-gpx" class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 disabled:opacity-50" disabled>Télécharger au format GPX</button>
-    </div>
-
-    <!-- Loading Indicator -->
-    <div id="loading" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-      <div class="bg-white p-4 rounded-lg">
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
-        <p class="mt-2">Loading GPX...</p>
-      </div>
+      <button id="download-gpx"
+              class="w-full bg-[#197278] text-white p-2 rounded hover:bg-[#283D3B] transition-colors disabled:opacity-50 disabled:hover:bg-[#197278]"
+              disabled>
+        Télécharger en GPX
+      </button>
     </div>
   </div>
 
-  <!-- Map container -->
-  <div id="map" class="flex-grow w-full"></div>
-
+    <h2 class="text-center text-5xl text-white m-4">EV5 des Hauts-de-France</h2>
+    <div class="flex justify-center mb-4">
+        <a href="{{ path('app_itinerary') }}" class="btn bg-[#C44536]">Détails et traces GPX</a>
+    </div>
+    <!-- Map container -->
+    <div id="map" class="flex-grow rounded-lg"></div>
 </div>
-
+</section>
 {% endblock %}

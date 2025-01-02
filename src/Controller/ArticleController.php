@@ -3,13 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Comment;
 use App\Form\ArticleType;
+use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/article')]
 final class ArticleController extends AbstractController
@@ -42,19 +44,36 @@ final class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}', name: 'app_article_show', methods: ['GET'])]
-    public function show(string $slug, ArticleRepository $articleRepository): Response
+    #[Route('/{slug}', name: 'app_article_show', methods: ['GET', 'POST'])]
+    public function show(Request $request, string $slug, ArticleRepository $articleRepository, EntityManagerInterface $entityManager): Response
     {
+
         $article = $articleRepository->findOneBy(['slug' => $slug]);
 
         if (!$article) {
             throw $this->createNotFoundException('Article non trouvé');
         }
 
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setArticle($article);
+            $comment->setUser($this->getUser());
+
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_article_show', [
+                'slug' => $article->getSlug()
+            ]);
+        }
 
         return $this->render('article/show.html.twig', [
             'article' => $article,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -83,8 +102,14 @@ final class ArticleController extends AbstractController
     }
 
     #[Route('/{slug}', name: 'app_article_delete', methods: ['POST'])]
-    public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, string $slug, ArticleRepository $articleRepository, EntityManagerInterface $entityManager): Response
     {
+        $article = $articleRepository->findOneBy(['slug' => $slug]);
+
+        if (!$article) {
+            throw $this->createNotFoundException('Article non trouvé');
+        }
+
         if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($article);
             $entityManager->flush();

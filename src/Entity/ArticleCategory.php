@@ -18,13 +18,13 @@ class ArticleCategory
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $slug = null;
 
     /**
      * @var Collection<int, Article>
      */
-    #[ORM\OneToMany(targetEntity: Article::class, mappedBy: 'categorie')]
+    #[ORM\OneToMany(targetEntity: Article::class, mappedBy: 'categorie', orphanRemoval: true)]
     private Collection $articles;
 
     public function __construct()
@@ -73,7 +73,7 @@ class ArticleCategory
     {
         if (!$this->articles->contains($article)) {
             $this->articles->add($article);
-            $article->setCategorie($this);
+            $article->setCategory($this);
         }
 
         return $this;
@@ -83,8 +83,8 @@ class ArticleCategory
     {
         if ($this->articles->removeElement($article)) {
             // set the owning side to null (unless already changed)
-            if ($article->getCategorie() === $this) {
-                $article->setCategorie(null);
+            if ($article->getCategory() === $this) {
+                $article->setCategory(null);
             }
         }
 

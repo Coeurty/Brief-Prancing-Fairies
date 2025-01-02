@@ -1,5 +1,8 @@
 // Select the necessary elements
 const carouselSlides = document.getElementById('carouselSlides');
+
+// TODO: See for a better solution?
+if (carouselSlides) {
 const slides = carouselSlides.children;
 let currentIndex = 0;
 
@@ -41,3 +44,4 @@ document.getElementById('prevButton').addEventListener('click', function() {
   prevSlide();
   resetTimer();  // Reset the timer when clicking manually
 });
+}

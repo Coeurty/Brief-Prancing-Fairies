@@ -3,15 +3,22 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use DateTimeImmutable;
 use App\Entity\Article;
 use App\Entity\Comment;
 use Faker\Factory as FakerFactory;
+use App\DataFixtures\ArticleFixtures;
+use App\DataFixtures\Traits\DateTrait;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class CommentFixtures extends Fixture implements DependentFixtureInterface
 {
+    use DateTrait;
+
+    private $faker;
+
     public function __construct()
         {
             $this->faker = FakerFactory::create('fr_FR');
@@ -19,20 +26,13 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $users = $manager->getRepository(User::class)->findAll();
-        $articles = $manager->getRepository(Article::class)->findAll();
-
-        if (empty($articles)) {
-            throw new \Exception('No articles found in the database.');
-        }
-
-
         for ($i = 0; $i < 100; $i++) {
             $comment = new Comment();
             $comment->setContent($this->faker->text(200));
             $comment->setIp($this->faker->ipv4);
-            $comment->setArticle($this->faker->randomElement($articles));
-            $comment->setUser($this->faker->randomElement($users));
+            $comment->setArticle($this->getReference('article_' . $this->faker->numberBetween(0, 19), Article::class));
+            $comment->setUser($this->getReference('user_' . $this->faker->numberBetween(0, 9), User::class));
+            $comment->setCreatedAt($this->createRandomDate());
             $manager->persist($comment);
         }
 

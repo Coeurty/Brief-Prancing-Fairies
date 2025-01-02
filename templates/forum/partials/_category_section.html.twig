@@ -1,0 +1,29 @@
+<div class="mb-4">
+	<div class="flex justify-between bg-[#C44536] text-white rounded-t-lg px-8 flex-wrap">
+		<a class="flex align-middle" href="{{ path('app_forum_show_category', {'slug': topic_category.slug}) }}">
+			<div>{{ topic_category.name }}</div>
+		</a>
+		<div>
+			{{ include('/topic_category/_edit_form.html.twig', {
+                'form': form,
+                'topic_category': topic_category
+            }) }}
+		</div>
+	</div>
+	<div>
+		{% for topic in topic_category.topics %}
+			<div class="flex justify-between odd:bg-white even:bg-[#EDDDD4] {{ loop.last ? 'rounded-b-lg' : '' }}">
+				<span class="ml-4 p-1">
+					<a href="{{ path('app_forum_show_topic', {'categorySlug': topic_category.slug, 'topicSlug': topic.slug}) }}">
+						{{ topic.title }}
+					</a>
+				</span>
+				<span class="mr-4 p-1">{{ topic.createdAt|date('d/m/y') }}</span>
+			</div>
+		{% else %}
+			<div class="flex justify-between bg-white rounded-b-lg">
+				<span class="ml-4 p-1">Aucun sujet dans cette catégorie</span>
+			</div>
+		{% endfor %}
+	</div>
+</div>

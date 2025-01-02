@@ -7,6 +7,7 @@ use App\Entity\Article;
 use App\Entity\ArticleCategory;
 use App\DataFixtures\UserFixtures;
 use Faker\Factory as FakerFactory;
+use App\DataFixtures\Traits\DateTrait;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\ArticleCategoryFixtures;
@@ -15,6 +16,11 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
+    use DateTrait;
+
+    private $faker;
+    private $slugger;
+
     public function __construct()
     {
         $this->faker = FakerFactory::create('fr_FR');
@@ -23,9 +29,6 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $users = $manager->getRepository(User::class)->findAll();
-        $categories = $manager->getRepository(ArticleCategory::class)->findAll();
-
         for ($i = 0; $i < 20; $i++) {
             $article = new Article();
             $article->setTitle($this->faker->sentence(6));
@@ -33,9 +36,13 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             $article->setStandFirst($this->faker->text(100));
             $article->setCoverImage('https://picsum.photos/1200/300');
             $article->setContent($this->faker->text(2000));
-            $article->setCategory($this->faker->randomElement($categories));
-            $article->setUser($this->faker->randomElement($users));
+            $article->setCategory($this->getReference('article_category_' . $this->faker->numberBetween(0, 4), ArticleCategory::class));
+            $article->setUser($this->getReference('moderator_' . $this->faker->numberBetween(0, 2), User::class));
+            $article->setCreatedAt($this->createRandomDate());
+            $article->setUpdatedAt($this->createRandomDate($article->getCreatedAt()));
             $manager->persist($article);
+
+            $this->addReference('article_' . $i, $article);
         }
 
         $manager->flush();

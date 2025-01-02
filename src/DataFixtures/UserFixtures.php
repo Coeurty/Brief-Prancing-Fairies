@@ -24,17 +24,19 @@ class UserFixtures extends Fixture
         $this->createUser($manager, 'admin@oo.fr', '123', ['ROLE_ADMIN'], 'admin');
 
         for ($i = 0; $i < 3; $i++) {
-            $this->createUser($manager, $this->faker->email(), '123', ['ROLE_MODERATOR'], $this->faker->userName());
+            $moderator = $this->createUser($manager, $this->faker->email(), '123', ['ROLE_MODERATOR'], $this->faker->userName());
+            $this->addReference('moderator_'.$i, $moderator);
         }
 
         for ($i = 0; $i < 10; $i++) {
-            $this->createUser($manager, $this->faker->email(), '123', ['ROLE_USER'], $this->faker->userName());
+            $user = $this->createUser($manager, $this->faker->email(), '123', ['ROLE_USER'], $this->faker->userName());
+            $this->addReference('user_'.$i, $user);
         }
 
         $manager->flush();
     }
 
-    private function createUser(ObjectManager $manager, string $email, string $plainPassword, array $roles, string $nickname): void
+    private function createUser(ObjectManager $manager, string $email, string $plainPassword, array $roles, string $nickname): User
     {
         $user = new User();
         $user->setEmail($email);
@@ -43,5 +45,7 @@ class UserFixtures extends Fixture
         $user->setPassword($password);
         $user->setNickname($nickname);
         $manager->persist($user);
+
+        return $user;
     }
 }

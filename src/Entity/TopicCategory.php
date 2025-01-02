@@ -20,13 +20,13 @@ class TopicCategory
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $slug = null;
 
     /**
      * @var Collection<int, Topic>
      */
-    #[ORM\OneToMany(targetEntity: Topic::class, mappedBy: 'category')]
+    #[ORM\OneToMany(targetEntity: Topic::class, mappedBy: 'category', orphanRemoval: true)]
     private Collection $topics;
 
     public function __construct()

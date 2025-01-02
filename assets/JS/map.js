@@ -1,3 +1,5 @@
+// TODO: See for a better solution?
+if (document.getElementById('map')) {
 class GPXMapManager {
     constructor() {
       this.map = null;
@@ -200,3 +202,4 @@ class GPXMapManager {
     // Load default track
     app.addGPXTrack("/gpx/EuroVelo 5 Via_Romea.gpx");
   });
+}
