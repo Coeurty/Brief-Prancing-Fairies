@@ -14,17 +14,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/article')]
 final class ArticleController extends AbstractController
 {
+
     private PaginationService $paginationService;
 
     public function __construct(PaginationService $paginationService)
     {
         $this->paginationService = $paginationService;
     }
-
-    #[Route(name: 'app_article_index', methods: ['GET'])]
+  
+    #[Route('/actualité', name: 'app_article_index')]
     public function index(Request $request): Response
     {
         $paginatedArticle = $this->paginationService->paginate($request);
@@ -34,7 +34,7 @@ final class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
+    #[Route('/article/new', name: 'app_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $article = new Article();
@@ -54,7 +54,7 @@ final class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}', name: 'app_article_show', methods: ['GET', 'POST'])]
+    #[Route('/article/{slug}', name: 'app_article_show', methods: ['GET', 'POST'])]
     public function show(Request $request, string $slug, ArticleRepository $articleRepository, EntityManagerInterface $entityManager): Response
     {
 
@@ -87,7 +87,7 @@ final class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
+    #[Route('/article/{slug}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, EntityManagerInterface $entityManager, string $slug, ArticleRepository $articleRepository): Response
     {
         $article = $articleRepository->findOneBy(['slug' => $slug]);
@@ -111,7 +111,7 @@ final class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}', name: 'app_article_delete', methods: ['POST'])]
+    #[Route('/article/{slug}', name: 'app_article_delete', methods: ['POST'])]
     public function delete(Request $request, string $slug, ArticleRepository $articleRepository, EntityManagerInterface $entityManager): Response
     {
         $article = $articleRepository->findOneBy(['slug' => $slug]);
