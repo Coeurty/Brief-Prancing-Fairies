@@ -6,28 +6,42 @@ use App\Entity\Article;
 use App\Entity\Comment;
 use App\Form\ArticleType;
 use App\Form\CommentType;
+use App\Service\PaginationService;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/article')]
 final class ArticleController extends AbstractController
 {
-    #[Route(name: 'app_article_index', methods: ['GET'])]
-    public function index(ArticleRepository $articleRepository): Response
+
+    private PaginationService $paginationService;
+
+    public function __construct(PaginationService $paginationService)
     {
+        $this->paginationService = $paginationService;
+    }
+
+    #[Route('/actualité', name: 'app_article_index')]
+    public function index(Request $request): Response
+    {
+        $paginatedArticle = $this->paginationService->paginate($request);
+
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $paginatedArticle,
         ]);
     }
 
-    #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
+    #[Route('/article/new', name: 'app_article_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_MODERATOR')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $article = new Article();
+        $article->setCreatedAt(new \DateTimeImmutable());
+        $article->setUpdatedAt(new \DateTimeImmutable());
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
@@ -44,7 +58,7 @@ final class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}', name: 'app_article_show', methods: ['GET', 'POST'])]
+    #[Route('/article/{slug}', name: 'app_article_show', methods: ['GET', 'POST'])]
     public function show(Request $request, string $slug, ArticleRepository $articleRepository, EntityManagerInterface $entityManager): Response
     {
 
@@ -55,6 +69,7 @@ final class ArticleController extends AbstractController
         }
 
         $comment = new Comment();
+        $comment->setCreatedAt(new \DateTimeImmutable());
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
@@ -77,7 +92,8 @@ final class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
+    #[Route('/article/{slug}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_MODERATOR')]
     public function edit(Request $request, EntityManagerInterface $entityManager, string $slug, ArticleRepository $articleRepository): Response
     {
         $article = $articleRepository->findOneBy(['slug' => $slug]);
@@ -87,6 +103,7 @@ final class ArticleController extends AbstractController
         }
 
         $form = $this->createForm(ArticleType::class, $article);
+        $article->setUpdatedAt(new \DateTimeImmutable());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -101,7 +118,8 @@ final class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}', name: 'app_article_delete', methods: ['POST'])]
+    #[Route('/article/{slug}/delete', name: 'app_article_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_MODERATOR')]
     public function delete(Request $request, string $slug, ArticleRepository $articleRepository, EntityManagerInterface $entityManager): Response
     {
         $article = $articleRepository->findOneBy(['slug' => $slug]);
