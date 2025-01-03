@@ -42,6 +42,7 @@ final class ArticleController extends AbstractController
         $article = new Article();
         $article->setCreatedAt(new \DateTimeImmutable());
         $article->setUpdatedAt(new \DateTimeImmutable());
+        $article->setUser($this->getUser());
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
