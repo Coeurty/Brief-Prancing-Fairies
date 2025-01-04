@@ -30,6 +30,9 @@ class Comment
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $isReported = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +95,17 @@ class Comment
     {
         $this->createdAt = $createdAt;
 
+        return $this;
+    }
+
+    public function isReported(): bool
+    {
+        return $this->isReported;
+    }
+
+    public function setIsReported(bool $isReported): self
+    {
+        $this->isReported = $isReported;
         return $this;
     }
 }

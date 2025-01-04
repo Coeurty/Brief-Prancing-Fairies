@@ -33,6 +33,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
             $comment->setArticle($this->getReference('article_' . $this->faker->numberBetween(0, 19), Article::class));
             $comment->setUser($this->getReference('user_' . $this->faker->numberBetween(0, 9), User::class));
             $comment->setCreatedAt($this->createRandomDate());
+            $comment->setIsReported($this->faker->boolean(20));
             $manager->persist($comment);
         }
 

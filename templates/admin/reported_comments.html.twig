@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commentaires signalés{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Commentaires signalés</h1>
+
+    {% for message in app.flashes('success') %}
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="bg-white shadow-md rounded-lg">
+        {% if comments|length > 0 %}
+            {% for comment in comments %}
+                <div class="border-b p-4 {% if not loop.last %}border-gray-200{% endif %}">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <p class="font-semibold">{{ comment.user.nickname }}</p>
+                            <p class="text-sm text-gray-500">{{ comment.createdAt|date('d/m/Y H:i') }}</p>
+                            <p class="mt-2">{{ comment.content }}</p>
+                            <p class="text-sm text-gray-500 mt-1">Article : {{ comment.article.title }}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <form method="post" action="{{ path('admin_approve_comment', {'id': comment.id}) }}" class="inline">
+                                <input type="hidden" name="_token" value="{{ csrf_token('approve' ~ comment.id) }}">
+                                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                                    Approuver
+                                </button>
+                            </form>
+                            <form method="post" action="{{ path('app_comment_delete', {'id': comment.id}) }}" class="inline">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                                    Supprimer
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="p-4 text-center text-gray-500">
+                Aucun commentaire signalé.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
