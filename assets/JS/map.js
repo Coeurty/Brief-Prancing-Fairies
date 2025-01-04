@@ -1,5 +1,7 @@
+const map = document.getElementById('map');
+const mapSidebar = document.getElementById('mapSidebar');
 // TODO: See for a better solution?
-if (document.getElementById('map')) {
+if (map) {
 class GPXMapManager {
     constructor() {
       this.map = null;
@@ -8,7 +10,9 @@ class GPXMapManager {
       this.lastUploadedBlobUrl = null;
       this.mapLayers = {};
       this.initializeMap();
-      this.setupEventListeners();
+      if (mapSidebar) {
+        this.setupEventListeners();
+      }
     }
 
     initializeMap() {
@@ -31,52 +35,52 @@ class GPXMapManager {
       this.mapLayers.osm.addTo(this.map);
     }
 
-    async loadGPXFile(file) {
-      if (!this.validateGPXFile(file)) return;
+    // async loadGPXFile(file) {
+    //   if (!this.validateGPXFile(file)) return;
 
-      this.showLoading();
+    //   this.showLoading();
 
-      try {
-        const gpxData = await this.readFileAsync(file);
-        if (this.lastUploadedBlobUrl) {
-          URL.revokeObjectURL(this.lastUploadedBlobUrl);
-        }
+    //   try {
+    //     const gpxData = await this.readFileAsync(file);
+    //     if (this.lastUploadedBlobUrl) {
+    //       URL.revokeObjectURL(this.lastUploadedBlobUrl);
+    //     }
 
-        this.lastUploadedBlobUrl = URL.createObjectURL(new Blob([gpxData]));
-        await this.addGPXTrack(this.lastUploadedBlobUrl);
+    //     this.lastUploadedBlobUrl = URL.createObjectURL(new Blob([gpxData]));
+    //     await this.addGPXTrack(this.lastUploadedBlobUrl);
 
-        document.getElementById('file-name').textContent = file.name;
-      } catch (error) {
-        this.showError('Failed to load GPX file: ' + error.message);
-      } finally {
-        this.hideLoading();
-      }
-    }
+    //     document.getElementById('file-name').textContent = file.name;
+    //   } catch (error) {
+    //     this.showError('Failed to load GPX file: ' + error.message);
+    //   } finally {
+    //     this.hideLoading();
+    //   }
+    // }
 
-    validateGPXFile(file) {
-      const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+    // validateGPXFile(file) {
+    //   const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
-      if (!file.name.endsWith('.gpx')) {
-        this.showError('Please upload a valid GPX file');
-        return false;
-      }
+    //   if (!file.name.endsWith('.gpx')) {
+    //     this.showError('Please upload a valid GPX file');
+    //     return false;
+    //   }
 
-      if (file.size > MAX_SIZE) {
-        this.showError('File size exceeds 5MB limit');
-        return false;
-      }
+    //   if (file.size > MAX_SIZE) {
+    //     this.showError('File size exceeds 5MB limit');
+    //     return false;
+    //   }
 
-      return true;
-    }
+    //   return true;
+    // }
 
-    readFileAsync(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = e => resolve(e.target.result);
-        reader.onerror = e => reject(new Error('File reading failed'));
-        reader.readAsText(file);
-      });
-    }
+    // readFileAsync(file) {
+    //   return new Promise((resolve, reject) => {
+    //     const reader = new FileReader();
+    //     reader.onload = e => resolve(e.target.result);
+    //     reader.onerror = e => reject(new Error('File reading failed'));
+    //     reader.readAsText(file);
+    //   });
+    // }
 
     async addGPXTrack(url) {
       this.resetMap();
@@ -92,9 +96,11 @@ class GPXMapManager {
         })
         .on('loaded', e => {
           this.map.fitBounds(e.target.getBounds());
-          this.updateTrackStats(e.target);
           this.currentGPXUrl = url;
-          document.getElementById('download-gpx').disabled = false;
+          if (mapSidebar) {
+            this.updateTrackStats(e.target);
+            document.getElementById('download-gpx').disabled = false;
+          }
           resolve();
         })
         .on('error', e => {
@@ -147,18 +153,20 @@ class GPXMapManager {
         this.map.removeLayer(this.currentGPXLayer);
         this.currentGPXLayer = null;
       }
-      document.getElementById('track-stats').classList.add('hidden');
-      document.getElementById('download-gpx').disabled = true;
-      document.getElementById('file-name').textContent = '';
+      if (mapSidebar) {
+        document.getElementById('track-stats').classList.add('hidden');
+        document.getElementById('download-gpx').disabled = true;
+        // document.getElementById('file-name').textContent = '';
+      }
     }
 
-    showLoading() {
-      document.getElementById('loading').classList.remove('hidden');
-    }
+    // showLoading() {
+    //   document.getElementById('loading').classList.remove('hidden');
+    // }
 
-    hideLoading() {
-      document.getElementById('loading').classList.add('hidden');
-    }
+    // hideLoading() {
+    //   document.getElementById('loading').classList.add('hidden');
+    // }
 
     showError(message) {
       alert(message); // Could be replaced with a nicer UI notification
@@ -172,10 +180,10 @@ class GPXMapManager {
       });
 
       // GPX file upload
-      document.getElementById('gpx-upload').addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file) this.loadGPXFile(file);
-      });
+      // document.getElementById('gpx-upload').addEventListener('change', (e) => {
+      //   const file = e.target.files[0];
+      //   if (file) this.loadGPXFile(file);
+      // });
 
       // GPX list clicks
       document.getElementById('gpx-list').addEventListener('click', (e) => {
@@ -188,6 +196,7 @@ class GPXMapManager {
       document.getElementById('download-gpx').addEventListener('click', () => {
         if (this.currentGPXUrl) {
           const link = document.createElement('a');
+          console.log(this.currentGPXUrl);
           link.href = this.currentGPXUrl;
           link.download = this.currentGPXUrl.split('/').pop();
           link.click();
@@ -200,6 +209,7 @@ class GPXMapManager {
   document.addEventListener('DOMContentLoaded', () => {
     const app = new GPXMapManager();
     // Load default track
-    app.addGPXTrack("/gpx/EuroVelo 5 Via_Romea.gpx");
+    const defaultTrack = map.dataset.url;
+    if (defaultTrack) app.addGPXTrack(defaultTrack);
   });
 }
