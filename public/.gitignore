@@ -2,3 +2,5 @@ images/user_avatars/*
 !/images/user_avatars/.gitkeep
 images/slider_image/*
 !/images/slider_image/.gitkeep
+tracks/*
+!/tracks/.gitkeep
