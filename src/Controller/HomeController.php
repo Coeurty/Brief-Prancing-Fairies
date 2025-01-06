@@ -20,7 +20,7 @@ class HomeController extends AbstractController
     {
         $sliderImages = $sliderImageRepository->findAll();
         // The track with the largest file size is the full track
-        $EV5Track = $trackRepository->findBy([], ['fileSize' => 'DESC'], 1)[0];
+        $EV5Track = $trackRepository->findLargestTrackFile();
 
         return $this->render('home/index.html.twig', [
             'sliderImages' => $sliderImages,

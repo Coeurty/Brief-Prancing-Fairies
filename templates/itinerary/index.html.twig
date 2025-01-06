@@ -74,7 +74,11 @@
   </div>
 
   <!-- Map container -->
-  <div id="map" data-url="{{ vich_uploader_asset(defaultTrack) }}" class="flex-grow w-full lg:rounded-r-lg"></div>
+  {% if defaultTrack %}
+    <div id="map" data-url="{{ vich_uploader_asset(defaultTrack) }}" class="flex-grow rounded-lg"></div>
+  {% else %}
+    <p class="text-white text-center italic">Aucun fichier GPX pour la carte</p>    
+  {% endif %}
 </div>
 
 <!-- Loading Indicator -->
