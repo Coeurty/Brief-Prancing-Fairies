@@ -59,7 +59,11 @@
         <a href="{{ path('app_itinerary') }}" class="btn bg-[#C44536]">Détails et traces GPX</a>
     </div>
     <!-- Map container -->
-    <div id="map" data-url="{{ vich_uploader_asset(defaultTrack) }}" class="flex-grow rounded-lg"></div>
+    {% if defaultTrack %}
+      <div id="map" data-url="{{ vich_uploader_asset(defaultTrack) }}" class="flex-grow rounded-lg"></div>
+    {% else %}
+      <p class="text-white text-center italic">Aucun fichier GPX pour la carte</p>    
+    {% endif %}
 </div>
 </section>
 {% endblock %}
