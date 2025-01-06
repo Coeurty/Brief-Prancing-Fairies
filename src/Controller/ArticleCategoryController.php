@@ -70,7 +70,7 @@ final class ArticleCategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_article_category_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_article_category_delete', methods: ['POST'])]
     public function delete(Request $request, ArticleCategory $articleCategory, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$articleCategory->getId(), $request->getPayload()->getString('_token'))) {

@@ -34,11 +34,6 @@ class ArticleType extends AbstractType
                 'choice_label' => 'name',
                 'label' => 'Catégorie'
             ])
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'nickname',
-                'label' => 'Auteur'
-            ])
         ;
     }
 

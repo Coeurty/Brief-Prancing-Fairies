@@ -15,15 +15,11 @@
   <div class="overflow-hidden rounded-lg shadow-lg">
     <div class="flex transition-transform duration-500 ease-in-out" id="carouselSlides">
       <!-- Slides -->
-      <div class="flex-shrink-0 w-full">
-        <img src="https://picsum.photos/800/300?random=1" alt="Slide 1" class="w-full h-auto">
-      </div>
-      <div class="flex-shrink-0 w-full">
-        <img src="https://picsum.photos/800/300?random=2" alt="Slide 2" class="w-full h-auto">
-      </div>
-      <div class="flex-shrink-0 w-full">
-        <img src="https://picsum.photos/800/300?random=3" alt="Slide 3" class="w-full h-auto">
-      </div>
+      {% for image in sliderImages %}
+        <div class="flex-shrink-0 w-full">
+          <img src="{{ vich_uploader_asset(image) }}" alt="Slide {{ loop.index }}" class="w-full h-auto">
+        </div>
+      {% endfor %}
     </div>
   </div>
 
@@ -58,61 +54,12 @@
 <!-- Map Section -->
 <section class="h-screen bg-gradient-to-b from-[#197278] to-[#283D3B] mb-8">
 <div class="flex flex-col h-full w-11/12 md:w-[720px] mx-auto">
-  <!-- Sidebar -->
-  {# TODO: Remove the sidebar (useless here), problem with js #}
-  <div style="display: none;" class="lg:w-1/4 w-full bg-[#EDDDD4] p-4 lg:rounded-l-lg">
-    <h2 class="text-xl font-bold mb-4 text-[#283D3B]">Traces GPX</h2>
-
-    <!-- Stats Display -->
-    <div id="track-stats" class="mb-4 p-3 bg-white rounded shadow-sm hidden">
-      <h3 class="font-semibold mb-2 text-[#197278]">Statistiques du tracé</h3>
-      <div id="stats-content" class="text-sm mb-2 text-gray-600"></div>
-      <div id="estimated-time" class="text-sm text-gray-600"></div>
-    </div>
-
-     <ul id="gpx-list" class="space-y-2">
-      <li data-url="/gpx/EuroVelo 5 Via_Romea.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">Euro Vélo Nord Complète</li>
-      <li data-url="/gpx/Calais-St-Omer.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">Calais->St-Omer</li>
-      <li data-url="/gpx/St-Omer-Bethunes.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">St-Omer->Béthunes</li>
-      <li data-url="/gpx/Bethunes-Lens.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">Béthunes->Lens</li>
-      <li data-url="/gpx/Lens-Lille.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">Lens->Lille</li>
-      <li data-url="/gpx/lille-wattrelos.gpx" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">Lille->Wattrelos</li>
-    </ul>
-
-    <div class="mt-4 space-y-4">
-      <div>
-        <label class="block text-sm font-medium text-[#283D3B]">Fond de carte</label>
-        <select id="map-style" class="mt-1 p-2 border rounded w-full focus:border-[#197278] focus:ring-[#197278]">
-          <option value="osm">OpenStreetMap</option>
-          <option value="esri">Esri Satellite</option>
-          <option value="terrain">Terrain</option>
-        </select>
-      </div>
-
-      <div class="relative">
-        <label class="block text-sm font-medium text-[#283D3B]">Import GPX</label>
-        <input type="file" id="gpx-upload" class="hidden" accept=".gpx" />
-        <button onclick="document.getElementById('gpx-upload').click()"
-                class="mt-1 w-full bg-[#197278] text-white p-2 rounded hover:bg-[#283D3B] transition-colors">
-          Charger un fichier GPX
-        </button>
-        <div id="file-name" class="text-sm mt-1 text-gray-600"></div>
-      </div>
-
-      <button id="download-gpx"
-              class="w-full bg-[#197278] text-white p-2 rounded hover:bg-[#283D3B] transition-colors disabled:opacity-50 disabled:hover:bg-[#197278]"
-              disabled>
-        Télécharger en GPX
-      </button>
-    </div>
-  </div>
-
     <h2 class="text-center text-5xl text-white m-4">EV5 des Hauts-de-France</h2>
     <div class="flex justify-center mb-4">
         <a href="{{ path('app_itinerary') }}" class="btn bg-[#C44536]">Détails et traces GPX</a>
     </div>
     <!-- Map container -->
-    <div id="map" class="flex-grow rounded-lg"></div>
+    <div id="map" data-url="{{ vich_uploader_asset(defaultTrack) }}" class="flex-grow rounded-lg"></div>
 </div>
 </section>
 {% endblock %}
