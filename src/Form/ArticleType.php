@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ArticleType extends AbstractType
 {
@@ -23,8 +24,12 @@ class ArticleType extends AbstractType
             ->add('standFirst', TextType::class, [
                 'label' => 'Chapeau'
             ])
-            ->add('coverImage', TextType::class, [
-                'label' => 'Image de couverture'
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Image de couverture',
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => false,
+                'image_uri' => true,
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'Contenu'

@@ -4,3 +4,5 @@ images/slider_image/*
 !/images/slider_image/.gitkeep
 tracks/*
 !/tracks/.gitkeep
+article_cover/*
+!/article_cover/.gitkeep

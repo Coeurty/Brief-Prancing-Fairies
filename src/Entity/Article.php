@@ -11,8 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[Vich\Uploadable]
 class Article
 {
     public function __construct()
@@ -26,6 +29,9 @@ class Article
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Vich\UploadableField(mapping: 'article_images', fileNameProperty: 'coverImage')]
+    private ?File $imageFile = null;
+
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
@@ -35,7 +41,7 @@ class Article
     #[ORM\Column(length: 255)]
     private ?string $standFirst = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $coverImage = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -60,6 +66,20 @@ class Article
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
     }
 
     public function getTitle(): ?string
@@ -103,7 +123,7 @@ class Article
         return $this->coverImage;
     }
 
-    public function setCoverImage(string $coverImage): static
+    public function setCoverImage(?string $coverImage): static
     {
         $this->coverImage = $coverImage;
 

@@ -14,7 +14,7 @@ class ItineraryController extends AbstractController
     {
         $tracks = $trackRepository->findBy([], ['displayOrder' => 'ASC']);
         // The track with the largest file size is the full track
-        $EV5Track = $trackRepository->findBy([], ['fileSize' => 'DESC'], 1)[0];
+        $EV5Track = $trackRepository->findLargestTrackFile();
 
         return $this->render('itinerary/index.html.twig', [
             'tracks' => $tracks,

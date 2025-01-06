@@ -16,6 +16,15 @@ class TrackRepository extends ServiceEntityRepository
         parent::__construct($registry, Track::class);
     }
 
+    public function findLargestTrackFile(): ?Track
+    {
+        return $this->createQueryBuilder('t')
+            ->orderBy('t.fileSize', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
 //    /**
 //     * @return Track[] Returns an array of Track objects
 //     */
@@ -31,7 +40,7 @@ class TrackRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Track
+    //    public function findOneBySomeField($value): ?Track
 //    {
 //        return $this->createQueryBuilder('t')
 //            ->andWhere('t.exampleField = :val')

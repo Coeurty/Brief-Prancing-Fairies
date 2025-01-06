@@ -19,6 +19,12 @@
         <div class="flex-shrink-0 w-full">
           <img src="{{ vich_uploader_asset(image) }}" alt="Slide {{ loop.index }}" class="w-full h-auto">
         </div>
+      {% else %}
+        {% for i in 1..2 %}
+          <div class="flex-shrink-0 w-full">
+            <img src="https://picsum.photos/800/300?random=1" alt="Slide {{ i }}" class="w-full h-auto">
+          </div>
+        {% endfor %}
       {% endfor %}
     </div>
   </div>
@@ -59,7 +65,11 @@
         <a href="{{ path('app_itinerary') }}" class="btn bg-[#C44536]">Détails et traces GPX</a>
     </div>
     <!-- Map container -->
-    <div id="map" data-url="{{ vich_uploader_asset(defaultTrack) }}" class="flex-grow rounded-lg"></div>
+    {% if defaultTrack %}
+      <div id="map" data-url="{{ vich_uploader_asset(defaultTrack) }}" class="flex-grow rounded-lg"></div>
+    {% else %}
+      <p class="text-white text-center italic">Aucun fichier GPX pour la carte</p>    
+    {% endif %}
 </div>
 </section>
 {% endblock %}
