@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}My Account{% endblock %}
+{% block title %}Mon compte{% endblock %}
 
 {% block body %}
 <div class="p-6 sm:p-10">
     <div class="container mx-auto p-10 bg-[#197278] rounded-lg shadow-lg">
-        <h1 class="text-3xl font-semibold text-gray-900 mb-6">Mon compte</h1>
+        <h1 class="text-3xl font-semibold text-white mb-6">Mon compte</h1>
 
         {# Display flash messages #}
         {% for message in app.flashes('success') %}
-            <div class="alert alert-success bg-green-500 text-black p-4 rounded-lg mb-4 shadow-md">
+            <div class="alert alert-success bg-green-500 text-white p-4 rounded-lg mb-4 shadow-md">
                 {{ message }}
             </div>
         {% endfor %}
         {% for message in app.flashes('error') %}
-            <div class="alert alert-error bg-red-500 text-black p-4 rounded-lg mb-4 shadow-md">
+            <div class="alert alert-error bg-red-500 text-white p-4 rounded-lg mb-4 shadow-md">
                 {{ message }}
             </div>
         {% endfor %}
@@ -22,7 +22,7 @@
         <div class="flex flex-col lg:flex-row items-start lg:justify-between mb-6">
             {# Form Fields on the Left #}
             <div class="w-full lg:w-1/2 lg:pr-8 mb-6 lg:mb-0">
-                <h3 class="text-2xl font-medium text-gray-900 mb-6">Profile</h3>
+                <h3 class="text-2xl font-medium text-white mb-6">Profile</h3>
                 {# Form start #}
                 {{ form_start(form) }}
                     <div class="space-y-6">
@@ -30,23 +30,23 @@
                         <div class="flex flex-col">
                             {{ form_row(form.nickname, {
                                 'attr': {
-                                    'class': 'px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200'
+                                    'class': 'px-4 py-2 gap-3 border border-gray-300  rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200'
                                 }
                             }) }}
                         </div>
 
                         {# Profile Picture Upload Field #}
                         <div class="flex flex-col">
-                            <label for="profilePicture" class="font-medium text-gray-900 mb-2">Changer de photo de profil</label>
+                            <label for="profilePicture" class="font-medium text-white mb-2">Changer de photo de profil</label>
                             
-                            {# Champ de téléchargement #}
+                            {# Field for uploading your own picture #}
                             {{ form_widget(form.profilePicture, {
                                 'attr': {
-                                    'class': 'px-4 py-2 border text-gray-900 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200'
+                                    'class': 'px-4 py-2 border text-white border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200'
                                 }
                             }) }}
                             
-                            {# Gestion des erreurs personnalisées #}
+                            {# Send an error message #}
                             {% if form.profilePicture.vars.errors is not empty %}
                                 {% for error in form.profilePicture.vars.errors %}
                                     <div class="text-white text-sm mt-2">
