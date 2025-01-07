@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accès Interdit{% endblock %}
+
+{% block body %}
+    <div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-dark text-white">
+        <div class="text-center p-5 rounded bg-dark bg-opacity-75">
+            <h1 class="display-1 fw-bold text-primary mb-4">403</h1>
+            <h2 class="display-6 text-light mb-4">Vous n'avez pas accès à cette page.</h2>
+            <a href="{{ path('app_home') }}" class="btn btn-outline-light btn-lg px-5 py-3 text-white">
+                Retourner à l'accueil
+            </a>
+        </div>
+    </div>
+{% endblock %}
