@@ -34,7 +34,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             $article->setTitle($this->faker->sentence(6));
             $article->setSlug($this->slugger->slug(strtolower($article->getTitle())));
             $article->setStandFirst($this->faker->text(100));
-            $article->setCoverImage('https://picsum.photos/1200/300');
+            $article->setCoverImage('coverImage.jpg');
             $article->setContent($this->faker->text(2000));
             $article->setCategory($this->getReference('article_category_' . $this->faker->numberBetween(0, 4), ArticleCategory::class));
             $article->setUser($this->getReference('moderator_' . $this->faker->numberBetween(0, 2), User::class));

@@ -25,7 +25,7 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'sliderImages' => $sliderImages,
             'defaultTrack' => $EV5Track,
-            'articles' => $articleRepository->findBy([], ['id' => 'DESC'], 6),
+            'articles' => $articleRepository->findBy([], ['createdAt' => 'DESC'], 6),
         ]);
     }
 }
