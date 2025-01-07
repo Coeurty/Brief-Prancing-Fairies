@@ -34,6 +34,9 @@ class Track
     #[ORM\Column(nullable: true)]
     private ?int $fileSize = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $description = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +123,18 @@ class Track
     public function setFileSize(?int $fileSize): static
     {
         $this->fileSize = $fileSize;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }
