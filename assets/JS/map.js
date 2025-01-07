@@ -186,10 +186,12 @@ class GPXMapManager {
       // });
 
       // GPX list clicks
-      document.getElementById('gpx-list').addEventListener('click', (e) => {
-        if (e.target.classList.contains('track-item')) {
-          this.addGPXTrack(e.target.getAttribute('data-url'));
-        }
+      document.querySelectorAll('#gpx-list>li').forEach(li => {
+        li.addEventListener('click', (e) => {
+          if (li.classList.contains('track-item')) {
+            this.addGPXTrack(li.getAttribute('data-url'));
+          }
+        });
       });
 
       // Download button
