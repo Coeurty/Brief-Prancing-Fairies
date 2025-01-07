@@ -17,7 +17,7 @@
 
 		<div class="flex gap-4 mb-8 text-sm text-gray-500">
 			<p>Créé le:
-				{{ article.createdAt|date('d/m/Y H:i') }}</p>
+				{{ article.createdAt|date('d/m/Y H:i') }} par {{ article.user.nickname }}</p>
 			{% if article.createdAt != article.updatedAt %}
 				<p>Mis à jour le:
 					{{ article.updatedAt|date('d/m/Y H:i') }}</p>
