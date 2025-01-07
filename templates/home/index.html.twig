@@ -4,7 +4,7 @@
 
 {% block body %}
 <!-- Carousel Container -->
-<div class="relative w-full mx-auto mb-8">
+<div class="relative w-full mx-auto">
   <!-- Watermark with adjustable text -->
   <div class="absolute top-0 left-0 w-full h-full z-10 pointer-events-none flex justify-start items-center"
       style="background: linear-gradient(to right, rgba(40, 61, 59, 0.7) 50%, rgba(40, 61, 59, 0) 50%);">
@@ -17,12 +17,12 @@
       <!-- Slides -->
       {% for image in sliderImages %}
         <div class="flex-shrink-0 w-full">
-          <img src="{{ vich_uploader_asset(image) }}" alt="Slide {{ loop.index }}" class="w-full h-auto">
+          <img src="{{ vich_uploader_asset(image) }}" alt="Slide {{ loop.index }}" class="w-full h-auto" style="height: 390px; object-fit: cover;">
         </div>
       {% else %}
         {% for i in 1..2 %}
           <div class="flex-shrink-0 w-full">
-            <img src="https://picsum.photos/800/300?random=1" alt="Slide {{ i }}" class="w-full h-auto">
+            <img src="https://picsum.photos/800/300?random=1" alt="Slide {{ i }}" class="w-full h-auto" style="height: 390px; object-fit: cover;">
           </div>
         {% endfor %}
       {% endfor %}

@@ -33,3 +33,4 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 compose.override.yaml
+public/gpx/EuroVelo 5 Via_Romea.gpx
