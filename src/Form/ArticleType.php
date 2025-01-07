@@ -22,7 +22,7 @@ class ArticleType extends AbstractType
                 'label' => 'Titre'
             ])
             ->add('standFirst', TextType::class, [
-                'label' => 'Chapeau'
+                'label' => 'Description'
             ])
             ->add('imageFile', VichImageType::class, [
                 'label' => 'Image de couverture',
