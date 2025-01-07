@@ -35,53 +35,6 @@ class GPXMapManager {
       this.mapLayers.osm.addTo(this.map);
     }
 
-    // async loadGPXFile(file) {
-    //   if (!this.validateGPXFile(file)) return;
-
-    //   this.showLoading();
-
-    //   try {
-    //     const gpxData = await this.readFileAsync(file);
-    //     if (this.lastUploadedBlobUrl) {
-    //       URL.revokeObjectURL(this.lastUploadedBlobUrl);
-    //     }
-
-    //     this.lastUploadedBlobUrl = URL.createObjectURL(new Blob([gpxData]));
-    //     await this.addGPXTrack(this.lastUploadedBlobUrl);
-
-    //     document.getElementById('file-name').textContent = file.name;
-    //   } catch (error) {
-    //     this.showError('Failed to load GPX file: ' + error.message);
-    //   } finally {
-    //     this.hideLoading();
-    //   }
-    // }
-
-    // validateGPXFile(file) {
-    //   const MAX_SIZE = 5 * 1024 * 1024; // 5MB
-
-    //   if (!file.name.endsWith('.gpx')) {
-    //     this.showError('Please upload a valid GPX file');
-    //     return false;
-    //   }
-
-    //   if (file.size > MAX_SIZE) {
-    //     this.showError('File size exceeds 5MB limit');
-    //     return false;
-    //   }
-
-    //   return true;
-    // }
-
-    // readFileAsync(file) {
-    //   return new Promise((resolve, reject) => {
-    //     const reader = new FileReader();
-    //     reader.onload = e => resolve(e.target.result);
-    //     reader.onerror = e => reject(new Error('File reading failed'));
-    //     reader.readAsText(file);
-    //   });
-    // }
-
     async addGPXTrack(url) {
       this.resetMap();
 
@@ -123,7 +76,7 @@ class GPXMapManager {
       stats.innerHTML = `
         <div class="grid grid-cols-2 gap-2">
           <div>Distance:</div><div>${distance} km</div>
-          <div>Elevation Gain:</div><div>${elevation} m</div>
+          <div>Dénivelé:</div><div>${elevation} m</div>
         </div>
       `;
       
@@ -132,12 +85,6 @@ class GPXMapManager {
       estimatedTimeElement.textContent = `Temps de trajet estimé: ${estimatedTime}`;
       
       statsContainer.classList.remove('hidden');
-    }
-
-    formatDuration(seconds) {
-      const hours = Math.floor(seconds / 3600);
-      const minutes = Math.floor((seconds % 3600) / 60);
-      return `${hours}h ${minutes}m`;
     }
 
     estimateTravelTime(distance) {
@@ -156,20 +103,7 @@ class GPXMapManager {
       if (mapSidebar) {
         document.getElementById('track-stats').classList.add('hidden');
         document.getElementById('download-gpx').disabled = true;
-        // document.getElementById('file-name').textContent = '';
       }
-    }
-
-    // showLoading() {
-    //   document.getElementById('loading').classList.remove('hidden');
-    // }
-
-    // hideLoading() {
-    //   document.getElementById('loading').classList.add('hidden');
-    // }
-
-    showError(message) {
-      alert(message); // Could be replaced with a nicer UI notification
     }
 
     setupEventListeners() {
@@ -179,18 +113,10 @@ class GPXMapManager {
         this.mapLayers[e.target.value].addTo(this.map);
       });
 
-      // GPX file upload
-      // document.getElementById('gpx-upload').addEventListener('change', (e) => {
-      //   const file = e.target.files[0];
-      //   if (file) this.loadGPXFile(file);
-      // });
-
       // GPX list clicks
       document.querySelectorAll('#gpx-list>li').forEach(li => {
-        li.addEventListener('click', (e) => {
-          if (li.classList.contains('track-item')) {
-            this.addGPXTrack(li.getAttribute('data-url'));
-          }
+        li.addEventListener('click', () => {
+          this.addGPXTrack(li.dataset.url);
         });
       });
 
@@ -198,7 +124,6 @@ class GPXMapManager {
       document.getElementById('download-gpx').addEventListener('click', () => {
         if (this.currentGPXUrl) {
           const link = document.createElement('a');
-          console.log(this.currentGPXUrl);
           link.href = this.currentGPXUrl;
           link.download = this.currentGPXUrl.split('/').pop();
           link.click();
@@ -210,7 +135,6 @@ class GPXMapManager {
   // Initialize the application
   document.addEventListener('DOMContentLoaded', () => {
     const app = new GPXMapManager();
-    // Load default track
     const defaultTrack = map.dataset.url;
     if (defaultTrack) app.addGPXTrack(defaultTrack);
   });
