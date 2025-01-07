@@ -23,7 +23,8 @@ class TrackCrudController extends AbstractCrudController
         return [
             TextField::new('fileName', 'Nom du fichier')
                 ->hideOnForm(),
-            TextField::new('name', 'Nom de la trace'),
+            TextField::new('name', 'Nom'),
+            TextField::new('description', 'Description'),
             NumberField::new('displayOrder', 'Ordre d\'affichage'),
             TextField::new('trackFile', 'Trace GPX')
                 ->setFormType(VichFileType::class)
