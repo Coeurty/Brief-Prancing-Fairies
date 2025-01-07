@@ -13,6 +13,9 @@
 			<div
 				class="p-6">
 				<!-- Titre -->
+				<p class="text-sm text-gray-500 mb-2">
+					{{ article.createdAt|date('d/m/Y') }}
+				</p>
 				<h3 class="text-xl font-bold text-[#283D3B] mb-3 line-clamp-2">
 					{{ article.title }}
 				</h3>

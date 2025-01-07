@@ -13,10 +13,12 @@
 
         
     </head>
-    <body>
-    {% include 'partials/_header.html.twig' %}
-    {% block body %}{% endblock %}
-    {% include 'partials/_footer.html.twig' %}
+    <body class="min-h-screen flex flex-col">
+        <div class="flex-grow">
+            {% include 'partials/_header.html.twig' %}
+            {% block body %}{% endblock %}
+        </div>
+        {% include 'partials/_footer.html.twig' %}
     
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}

@@ -41,7 +41,14 @@
 
      <ul id="gpx-list" class="space-y-2">
       {% for track in tracks %}
-        <li data-url="{{ vich_uploader_asset(track) }}" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">{{ track.name }}</li>
+        <li data-url="{{ vich_uploader_asset(track) }}" class="track-item bg-blue-500 text-white text-center p-2 rounded hover:bg-blue-600 cursor-pointer">
+          <p class="font-bold">
+            {{ track.name }}
+          </p>
+          <p>
+            {{ track.description }}
+          </p>
+        </li>
       {% endfor %}
     </ul>
 
