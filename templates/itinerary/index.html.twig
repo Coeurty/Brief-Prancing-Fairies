@@ -29,7 +29,7 @@
 <!-- Map Section -->
 <div class="flex flex-col lg:flex-row h-screen bg-[#283D3B]">
   <!-- Sidebar -->
-  <div id="mapSidebar" class="lg:w-1/4 w-full bg-[#EDDDD4] p-4 lg:rounded-l-lg">
+  <div id="mapSidebar" class="lg:w-1/4 w-full bg-[#EDDDD4] p-4">
     <h2 class="text-xl font-bold mb-4 text-[#283D3B]">Traces GPX</h2>
 
     <!-- Stats Display -->
@@ -55,7 +55,7 @@
         </select>
       </div>
 
-      {# <div class="relative">
+      <div class="relative">
         <label class="block text-sm font-medium text-[#283D3B]">Import GPX</label>
         <input type="file" id="gpx-upload" class="hidden" accept=".gpx" />
         <button onclick="document.getElementById('gpx-upload').click()"
@@ -63,7 +63,7 @@
           Charger un fichier GPX
         </button>
         <div id="file-name" class="text-sm mt-1 text-gray-600"></div>
-      </div> #}
+      </div>
 
       <button id="download-gpx"
               class="w-full bg-[#197278] text-white p-2 rounded hover:bg-[#283D3B] transition-colors disabled:opacity-50 disabled:hover:bg-[#197278]"
@@ -75,7 +75,7 @@
 
   <!-- Map container -->
   {% if defaultTrack %}
-    <div id="map" data-url="{{ vich_uploader_asset(defaultTrack) }}" class="flex-grow rounded-lg"></div>
+    <div id="map" data-url="{{ vich_uploader_asset(defaultTrack) }}" class="flex-grow z-0"></div>
   {% else %}
     <p class="text-white text-center italic">Aucun fichier GPX pour la carte</p>    
   {% endif %}
